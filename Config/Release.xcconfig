@@ -1,0 +1,10 @@
+// Release.xcconfig
+// Release configuration settings
+
+#include "Shared.xcconfig"
+
+// Release-specific settings
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+SWIFT_OPTIMIZATION_LEVEL = -O
+SWIFT_COMPILATION_MODE = wholemodule
+VALIDATE_PRODUCT = YES

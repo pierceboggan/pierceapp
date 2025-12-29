@@ -1,0 +1,173 @@
+//
+//  WaterService.swift
+//  Project2026
+//
+//  Service for tracking water consumption
+//
+
+import SwiftUI
+
+@MainActor
+class WaterService: ObservableObject {
+    @Published var waterLogs: [WaterLog] = []
+    @Published var dailyTarget: Double = 100 // ounces
+    @Published var isLoading = false
+    
+    private let persistence = PersistenceManager.shared
+    
+    init() {
+        Task {
+            await loadData()
+        }
+    }
+    
+    // MARK: - Data Loading
+    
+    func loadData() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            waterLogs = try await persistence.load([WaterLog].self, from: StorageKey.waterLogs)
+        } catch {
+            waterLogs = []
+        }
+    }
+    
+    // MARK: - Today's Water
+    
+    var todayLog: WaterLog {
+        let today = Calendar.current.startOfDay(for: Date())
+        if let existing = waterLogs.first(where: { $0.date == today }) {
+            return existing
+        }
+        return WaterLog(date: Date(), targetOunces: dailyTarget)
+    }
+    
+    var todayTotal: Double {
+        todayLog.totalOunces
+    }
+    
+    var todayProgress: Double {
+        todayLog.progress
+    }
+    
+    var todayRemaining: Double {
+        todayLog.remainingOunces
+    }
+    
+    var isTodayComplete: Bool {
+        todayLog.isComplete
+    }
+    
+    // MARK: - Adding Water
+    
+    func addWater(_ amount: Double) async {
+        let today = Calendar.current.startOfDay(for: Date())
+        let entry = WaterEntry(amount: amount)
+        
+        if let index = waterLogs.firstIndex(where: { $0.date == today }) {
+            waterLogs[index].entries.append(entry)
+        } else {
+            var newLog = WaterLog(date: Date(), targetOunces: dailyTarget)
+            newLog.entries.append(entry)
+            waterLogs.append(newLog)
+        }
+        
+        await save()
+    }
+    
+    func addWater(quickAdd: WaterQuickAdd) async {
+        await addWater(quickAdd.ounces)
+    }
+    
+    func removeLastEntry() async {
+        let today = Calendar.current.startOfDay(for: Date())
+        if let index = waterLogs.firstIndex(where: { $0.date == today }) {
+            if !waterLogs[index].entries.isEmpty {
+                waterLogs[index].entries.removeLast()
+                await save()
+            }
+        }
+    }
+    
+    func setManualTotal(_ amount: Double) async {
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        if let index = waterLogs.firstIndex(where: { $0.date == today }) {
+            // Replace all entries with a single entry of the specified amount
+            waterLogs[index].entries = [WaterEntry(amount: amount)]
+        } else {
+            var newLog = WaterLog(date: Date(), targetOunces: dailyTarget)
+            newLog.entries = [WaterEntry(amount: amount)]
+            waterLogs.append(newLog)
+        }
+        
+        await save()
+    }
+    
+    // MARK: - History
+    
+    func waterLog(for date: Date) -> WaterLog? {
+        let dayStart = Calendar.current.startOfDay(for: date)
+        return waterLogs.first { $0.date == dayStart }
+    }
+    
+    func totalOunces(for date: Date) -> Double {
+        waterLog(for: date)?.totalOunces ?? 0
+    }
+    
+    func weeklyAverage() -> Double {
+        let calendar = Calendar.current
+        let today = Date()
+        var total: Double = 0
+        var count = 0
+        
+        for dayOffset in 0..<7 {
+            guard let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) else { continue }
+            if let log = waterLog(for: date) {
+                total += log.totalOunces
+                count += 1
+            }
+        }
+        
+        return count > 0 ? total / Double(count) : 0
+    }
+    
+    func weeklyData() -> [(date: Date, amount: Double)] {
+        let calendar = Calendar.current
+        let today = Date()
+        var data: [(Date, Double)] = []
+        
+        for dayOffset in (0..<7).reversed() {
+            guard let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) else { continue }
+            let amount = waterLog(for: date)?.totalOunces ?? 0
+            data.append((date, amount))
+        }
+        
+        return data
+    }
+    
+    // MARK: - Target Management
+    
+    func updateDailyTarget(_ target: Double) async {
+        dailyTarget = target
+        
+        // Update today's log target
+        let today = Calendar.current.startOfDay(for: Date())
+        if let index = waterLogs.firstIndex(where: { $0.date == today }) {
+            waterLogs[index].targetOunces = target
+            await save()
+        }
+    }
+    
+    // MARK: - Persistence
+    
+    private func save() async {
+        do {
+            try await persistence.save(waterLogs, to: StorageKey.waterLogs)
+        } catch {
+            print("Failed to save water logs: \(error)")
+        }
+    }
+}
