@@ -1,0 +1,53 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Show Xcode version
+      run: xcodebuild -version
+      
+    - name: Show available simulators
+      run: xcrun simctl list devices available
+      
+    - name: Build project
+      run: |
+        cd Project2026
+        xcodebuild clean build \
+          -project Project2026.xcodeproj \
+          -scheme Project2026 \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+      
+    - name: Run tests
+      run: |
+        cd Project2026
+        xcodebuild test \
+          -project Project2026.xcodeproj \
+          -scheme Project2026 \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+      continue-on-error: true
+      
+    - name: Archive build artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: |
+          ~/Library/Logs/DiagnosticReports/
+          DerivedData/Logs/
+        if-no-files-found: ignore

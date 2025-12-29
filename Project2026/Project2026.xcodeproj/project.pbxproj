@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+archiveVersion = 1;
+classes = {
+};
+objectVersion = 56;
+objects = {
+
+/* Begin PBXBuildFile section */
+010001 /* Project2026App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010000 /* Project2026App.swift */; };
+010003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010002 /* ContentView.swift */; };
+010005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010004 /* Assets.xcassets */; };
+010007 /* Cleaning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010006 /* Cleaning.swift */; };
+010009 /* DaySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010008 /* DaySummary.swift */; };
+010011 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010010 /* Habit.swift */; };
+010013 /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010012 /* Reading.swift */; };
+010015 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010014 /* Theme.swift */; };
+010017 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010016 /* UserProfile.swift */; };
+010019 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010018 /* Water.swift */; };
+010021 /* CleaningService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010020 /* CleaningService.swift */; };
+010023 /* DaySummaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010022 /* DaySummaryService.swift */; };
+010025 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010024 /* ExportService.swift */; };
+010027 /* GoodreadsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010026 /* GoodreadsService.swift */; };
+010029 /* HabitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010028 /* HabitService.swift */; };
+010031 /* ReadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010030 /* ReadingService.swift */; };
+010033 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010032 /* ThemeService.swift */; };
+010035 /* WaterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010034 /* WaterService.swift */; };
+010037 /* CleaningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010036 /* CleaningViewModel.swift */; };
+010039 /* HabitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010038 /* HabitsViewModel.swift */; };
+010041 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010040 /* HistoryViewModel.swift */; };
+010043 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010042 /* ReadingViewModel.swift */; };
+010045 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010044 /* SettingsViewModel.swift */; };
+010047 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010046 /* TodayViewModel.swift */; };
+010049 /* CleaningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010048 /* CleaningView.swift */; };
+010051 /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010050 /* HabitsView.swift */; };
+010053 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010052 /* HistoryView.swift */; };
+010055 /* ReadingProgressCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010054 /* ReadingProgressCard.swift */; };
+010057 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010056 /* SettingsView.swift */; };
+010059 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010058 /* TodayView.swift */; };
+010061 /* WaterTrackerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010060 /* WaterTrackerCard.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+010000 /* Project2026App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project2026App.swift; sourceTree = "<group>"; };
+010002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+010004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+010006 /* Cleaning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cleaning.swift; sourceTree = "<group>"; };
+010008 /* DaySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySummary.swift; sourceTree = "<group>"; };
+010010 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+010012 /* Reading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reading.swift; sourceTree = "<group>"; };
+010014 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+010016 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+010018 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
+010020 /* CleaningService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleaningService.swift; sourceTree = "<group>"; };
+010022 /* DaySummaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySummaryService.swift; sourceTree = "<group>"; };
+010024 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+010026 /* GoodreadsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodreadsService.swift; sourceTree = "<group>"; };
+010028 /* HabitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitService.swift; sourceTree = "<group>"; };
+010030 /* ReadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingService.swift; sourceTree = "<group>"; };
+010032 /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
+010034 /* WaterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterService.swift; sourceTree = "<group>"; };
+010036 /* CleaningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleaningViewModel.swift; sourceTree = "<group>"; };
+010038 /* HabitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewModel.swift; sourceTree = "<group>"; };
+010040 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+010042 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
+010044 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+010046 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+010048 /* CleaningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleaningView.swift; sourceTree = "<group>"; };
+010050 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = "<group>"; };
+010052 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+010054 /* ReadingProgressCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingProgressCard.swift; sourceTree = "<group>"; };
+010056 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+010058 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+010060 /* WaterTrackerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterTrackerCard.swift; sourceTree = "<group>"; };
+FFFFFF0 /* Project2026.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2026.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+FFFFFF1 /* Frameworks */ = {
+isa = PBXFrameworksBuildPhase;
+buildActionMask = 2147483647;
+files = (
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+FFFFFF2 /* Project2026 */ = {
+isa = PBXGroup;
+children = (
+010000 /* Project2026App.swift */,
+010002 /* ContentView.swift */,
+FFFFFF4 /* Models */,
+FFFFFF5 /* Services */,
+FFFFFF6 /* ViewModels */,
+FFFFFF7 /* Views */,
+FFFFFF8 /* Resources */,
+);
+path = Project2026;
+sourceTree = "<group>";
+};
+FFFFFF3 /* Products */ = {
+isa = PBXGroup;
+children = (
+FFFFFF0 /* Project2026.app */,
+);
+name = Products;
+sourceTree = "<group>";
+};
+FFFFFF4 /* Models */ = {
+isa = PBXGroup;
+children = (
+010006 /* Cleaning.swift */,
+010008 /* DaySummary.swift */,
+010010 /* Habit.swift */,
+010012 /* Reading.swift */,
+010014 /* Theme.swift */,
+010016 /* UserProfile.swift */,
+010018 /* Water.swift */,
+);
+path = Models;
+sourceTree = "<group>";
+};
+FFFFFF5 /* Services */ = {
+isa = PBXGroup;
+children = (
+010020 /* CleaningService.swift */,
+010022 /* DaySummaryService.swift */,
+010024 /* ExportService.swift */,
+010026 /* GoodreadsService.swift */,
+010028 /* HabitService.swift */,
+010030 /* ReadingService.swift */,
+010032 /* ThemeService.swift */,
+010034 /* WaterService.swift */,
+);
+path = Services;
+sourceTree = "<group>";
+};
+FFFFFF6 /* ViewModels */ = {
+isa = PBXGroup;
+children = (
+010036 /* CleaningViewModel.swift */,
+010038 /* HabitsViewModel.swift */,
+010040 /* HistoryViewModel.swift */,
+010042 /* ReadingViewModel.swift */,
+010044 /* SettingsViewModel.swift */,
+010046 /* TodayViewModel.swift */,
+);
+path = ViewModels;
+sourceTree = "<group>";
+};
+FFFFFF7 /* Views */ = {
+isa = PBXGroup;
+children = (
+010048 /* CleaningView.swift */,
+010050 /* HabitsView.swift */,
+010052 /* HistoryView.swift */,
+010054 /* ReadingProgressCard.swift */,
+010056 /* SettingsView.swift */,
+010058 /* TodayView.swift */,
+010060 /* WaterTrackerCard.swift */,
+);
+path = Views;
+sourceTree = "<group>";
+};
+FFFFFF8 /* Resources */ = {
+isa = PBXGroup;
+children = (
+010004 /* Assets.xcassets */,
+);
+path = Resources;
+sourceTree = "<group>";
+};
+FFFFFF9 = {
+isa = PBXGroup;
+children = (
+FFFFFF2 /* Project2026 */,
+FFFFFF3 /* Products */,
+);
+sourceTree = "<group>";
+};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+FFFFFFA /* Project2026 */ = {
+isa = PBXNativeTarget;
+buildConfigurationList = FFFFFFB /* Build configuration list for PBXNativeTarget "Project2026" */;
+buildPhases = (
+FFFFFFC /* Sources */,
+FFFFFF1 /* Frameworks */,
+FFFFFFD /* Resources */,
+);
+buildRules = (
+);
+dependencies = (
+);
+name = Project2026;
+productName = Project2026;
+productReference = FFFFFF0 /* Project2026.app */;
+productType = "com.apple.product-type.application";
+};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+FFFFFFE /* Project object */ = {
+isa = PBXProject;
+attributes = {
+BuildIndependentTargetsInParallel = 1;
+LastSwiftUpdateCheck = 1500;
+LastUpgradeCheck = 1500;
+TargetAttributes = {
+FFFFFFA = {
+CreatedOnToolsVersion = 15.0;
+};
+};
+};
+buildConfigurationList = FFFFFFF /* Build configuration list for PBXProject "Project2026" */;
+compatibilityVersion = "Xcode 14.0";
+developmentRegion = en;
+hasScannedForEncodings = 0;
+knownRegions = (
+en,
+Base,
+);
+mainGroup = FFFFFF9;
+productRefGroup = FFFFFF3 /* Products */;
+projectDirPath = "";
+projectRoot = "";
+targets = (
+FFFFFFA /* Project2026 */,
+);
+};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+FFFFFFD /* Resources */ = {
+isa = PBXResourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+010005 /* Assets.xcassets in Resources */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+FFFFFFC /* Sources */ = {
+isa = PBXSourcesBuildPhase;
+buildActionMask = 2147483647;
+files = (
+010003 /* ContentView.swift in Sources */,
+010001 /* Project2026App.swift in Sources */,
+010007 /* Cleaning.swift in Sources */,
+010009 /* DaySummary.swift in Sources */,
+010011 /* Habit.swift in Sources */,
+010013 /* Reading.swift in Sources */,
+010015 /* Theme.swift in Sources */,
+010017 /* UserProfile.swift in Sources */,
+010019 /* Water.swift in Sources */,
+010021 /* CleaningService.swift in Sources */,
+010023 /* DaySummaryService.swift in Sources */,
+010025 /* ExportService.swift in Sources */,
+010027 /* GoodreadsService.swift in Sources */,
+010029 /* HabitService.swift in Sources */,
+010031 /* ReadingService.swift in Sources */,
+010033 /* ThemeService.swift in Sources */,
+010035 /* WaterService.swift in Sources */,
+010037 /* CleaningViewModel.swift in Sources */,
+010039 /* HabitsViewModel.swift in Sources */,
+010041 /* HistoryViewModel.swift in Sources */,
+010043 /* ReadingViewModel.swift in Sources */,
+010045 /* SettingsViewModel.swift in Sources */,
+010047 /* TodayViewModel.swift in Sources */,
+010049 /* CleaningView.swift in Sources */,
+010051 /* HabitsView.swift in Sources */,
+010053 /* HistoryView.swift in Sources */,
+010055 /* ReadingProgressCard.swift in Sources */,
+010057 /* SettingsView.swift in Sources */,
+010059 /* TodayView.swift in Sources */,
+010061 /* WaterTrackerCard.swift in Sources */,
+);
+runOnlyForDeploymentPostprocessing = 0;
+};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+1000000 /* Debug */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ALWAYS_SEARCH_USER_PATHS = NO;
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+CLANG_ANALYZER_NONNULL = YES;
+CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+CLANG_ENABLE_MODULES = YES;
+CLANG_ENABLE_OBJC_ARC = YES;
+CLANG_ENABLE_OBJC_WEAK = YES;
+CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+CLANG_WARN_BOOL_CONVERSION = YES;
+CLANG_WARN_COMMA = YES;
+CLANG_WARN_CONSTANT_CONVERSION = YES;
+CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+CLANG_WARN_EMPTY_BODY = YES;
+CLANG_WARN_ENUM_CONVERSION = YES;
+CLANG_WARN_INFINITE_RECURSION = YES;
+CLANG_WARN_INT_CONVERSION = YES;
+CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+CLANG_WARN_STRICT_PROTOTYPES = YES;
+CLANG_WARN_SUSPICIOUS_MOVE = YES;
+CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+CLANG_WARN_UNREACHABLE_CODE = YES;
+CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+CODE_SIGN_STYLE = Automatic;
+COPY_PHASE_STRIP = NO;
+CURRENT_PROJECT_VERSION = 1;
+DEBUG_INFORMATION_FORMAT = dwarf;
+DEVELOPMENT_ASSET_PATHS = "";
+DEVELOPMENT_TEAM = "";
+ENABLE_PREVIEWS = YES;
+ENABLE_STRICT_OBJC_MSGSEND = YES;
+ENABLE_TESTABILITY = YES;
+GCC_C_LANGUAGE_STANDARD = gnu11;
+GCC_DYNAMIC_NO_PIC = NO;
+GCC_NO_COMMON_BLOCKS = YES;
+GCC_OPTIMIZATION_LEVEL = 0;
+GCC_PREPROCESSOR_DEFINITIONS = (
+"DEBUG=1",
+"$(inherited)",
+);
+GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+GCC_WARN_UNDECLARED_SELECTOR = YES;
+GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+GCC_WARN_UNUSED_FUNCTION = YES;
+GCC_WARN_UNUSED_VARIABLE = YES;
+GENERATE_INFOPLIST_FILE = YES;
+INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+LD_RUNPATH_SEARCH_PATHS = (
+"$(inherited)",
+"@executable_path/Frameworks",
+);
+MARKETING_VERSION = 1.0;
+MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+MTL_FAST_MATH = YES;
+ONLY_ACTIVE_ARCH = YES;
+PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.Project2026;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = iphoneos;
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+SWIFT_EMIT_LOC_STRINGS = YES;
+SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = "1,2";
+};
+name = Debug;
+};
+1000001 /* Release */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ALWAYS_SEARCH_USER_PATHS = NO;
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+CLANG_ANALYZER_NONNULL = YES;
+CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+CLANG_ENABLE_MODULES = YES;
+CLANG_ENABLE_OBJC_ARC = YES;
+CLANG_ENABLE_OBJC_WEAK = YES;
+CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+CLANG_WARN_BOOL_CONVERSION = YES;
+CLANG_WARN_COMMA = YES;
+CLANG_WARN_CONSTANT_CONVERSION = YES;
+CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+CLANG_WARN_EMPTY_BODY = YES;
+CLANG_WARN_ENUM_CONVERSION = YES;
+CLANG_WARN_INFINITE_RECURSION = YES;
+CLANG_WARN_INT_CONVERSION = YES;
+CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+CLANG_WARN_STRICT_PROTOTYPES = YES;
+CLANG_WARN_SUSPICIOUS_MOVE = YES;
+CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+CLANG_WARN_UNREACHABLE_CODE = YES;
+CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+CODE_SIGN_STYLE = Automatic;
+COPY_PHASE_STRIP = NO;
+CURRENT_PROJECT_VERSION = 1;
+DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+DEVELOPMENT_ASSET_PATHS = "";
+DEVELOPMENT_TEAM = "";
+ENABLE_NS_ASSERTIONS = NO;
+ENABLE_PREVIEWS = YES;
+ENABLE_STRICT_OBJC_MSGSEND = YES;
+GCC_C_LANGUAGE_STANDARD = gnu11;
+GCC_NO_COMMON_BLOCKS = YES;
+GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+GCC_WARN_UNDECLARED_SELECTOR = YES;
+GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+GCC_WARN_UNUSED_FUNCTION = YES;
+GCC_WARN_UNUSED_VARIABLE = YES;
+GENERATE_INFOPLIST_FILE = YES;
+INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+LD_RUNPATH_SEARCH_PATHS = (
+"$(inherited)",
+"@executable_path/Frameworks",
+);
+MARKETING_VERSION = 1.0;
+MTL_ENABLE_DEBUG_INFO = NO;
+MTL_FAST_MATH = YES;
+PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.Project2026;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = iphoneos;
+SWIFT_COMPILATION_MODE = wholemodule;
+SWIFT_EMIT_LOC_STRINGS = YES;
+SWIFT_OPTIMIZATION_LEVEL = "-O";
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = "1,2";
+VALIDATE_PRODUCT = YES;
+};
+name = Release;
+};
+1000002 /* Debug */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ALWAYS_SEARCH_USER_PATHS = NO;
+CLANG_ANALYZER_NONNULL = YES;
+CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+CLANG_ENABLE_MODULES = YES;
+CLANG_ENABLE_OBJC_ARC = YES;
+CLANG_ENABLE_OBJC_WEAK = YES;
+CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+CLANG_WARN_BOOL_CONVERSION = YES;
+CLANG_WARN_COMMA = YES;
+CLANG_WARN_CONSTANT_CONVERSION = YES;
+CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+CLANG_WARN_EMPTY_BODY = YES;
+CLANG_WARN_ENUM_CONVERSION = YES;
+CLANG_WARN_INFINITE_RECURSION = YES;
+CLANG_WARN_INT_CONVERSION = YES;
+CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+CLANG_WARN_STRICT_PROTOTYPES = YES;
+CLANG_WARN_SUSPICIOUS_MOVE = YES;
+CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+CLANG_WARN_UNREACHABLE_CODE = YES;
+CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+COPY_PHASE_STRIP = NO;
+DEBUG_INFORMATION_FORMAT = dwarf;
+ENABLE_STRICT_OBJC_MSGSEND = YES;
+ENABLE_TESTABILITY = YES;
+GCC_C_LANGUAGE_STANDARD = gnu11;
+GCC_DYNAMIC_NO_PIC = NO;
+GCC_NO_COMMON_BLOCKS = YES;
+GCC_OPTIMIZATION_LEVEL = 0;
+GCC_PREPROCESSOR_DEFINITIONS = (
+"DEBUG=1",
+"$(inherited)",
+);
+GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+GCC_WARN_UNDECLARED_SELECTOR = YES;
+GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+GCC_WARN_UNUSED_FUNCTION = YES;
+GCC_WARN_UNUSED_VARIABLE = YES;
+MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+MTL_FAST_MATH = YES;
+ONLY_ACTIVE_ARCH = YES;
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+};
+name = Debug;
+};
+1000003 /* Release */ = {
+isa = XCBuildConfiguration;
+buildSettings = {
+ALWAYS_SEARCH_USER_PATHS = NO;
+CLANG_ANALYZER_NONNULL = YES;
+CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+CLANG_ENABLE_MODULES = YES;
+CLANG_ENABLE_OBJC_ARC = YES;
+CLANG_ENABLE_OBJC_WEAK = YES;
+CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+CLANG_WARN_BOOL_CONVERSION = YES;
+CLANG_WARN_COMMA = YES;
+CLANG_WARN_CONSTANT_CONVERSION = YES;
+CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+CLANG_WARN_EMPTY_BODY = YES;
+CLANG_WARN_ENUM_CONVERSION = YES;
+CLANG_WARN_INFINITE_RECURSION = YES;
+CLANG_WARN_INT_CONVERSION = YES;
+CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+CLANG_WARN_STRICT_PROTOTYPES = YES;
+CLANG_WARN_SUSPICIOUS_MOVE = YES;
+CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+CLANG_WARN_UNREACHABLE_CODE = YES;
+CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+COPY_PHASE_STRIP = NO;
+DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+ENABLE_NS_ASSERTIONS = NO;
+ENABLE_STRICT_OBJC_MSGSEND = YES;
+GCC_C_LANGUAGE_STANDARD = gnu11;
+GCC_NO_COMMON_BLOCKS = YES;
+GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+GCC_WARN_UNDECLARED_SELECTOR = YES;
+GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+GCC_WARN_UNUSED_FUNCTION = YES;
+GCC_WARN_UNUSED_VARIABLE = YES;
+MTL_ENABLE_DEBUG_INFO = NO;
+MTL_FAST_MATH = YES;
+SWIFT_COMPILATION_MODE = wholemodule;
+SWIFT_OPTIMIZATION_LEVEL = "-O";
+};
+name = Release;
+};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+FFFFFFB /* Build configuration list for PBXNativeTarget "Project2026" */ = {
+isa = XCConfigurationList;
+buildConfigurations = (
+1000000 /* Debug */,
+1000001 /* Release */,
+);
+defaultConfigurationIsVisible = 0;
+defaultConfigurationName = Release;
+};
+FFFFFFF /* Build configuration list for PBXProject "Project2026" */ = {
+isa = XCConfigurationList;
+buildConfigurations = (
+1000002 /* Debug */,
+1000003 /* Release */,
+);
+defaultConfigurationIsVisible = 0;
+defaultConfigurationName = Release;
+};
+/* End XCConfigurationList section */
+};
+rootObject = FFFFFFE /* Project object */;
+}
