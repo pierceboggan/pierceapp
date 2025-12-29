@@ -15,11 +15,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
-      
     - name: Show Xcode version
       run: xcodebuild -version
+      
+    - name: Show available simulators
+      run: xcrun simctl list devices available
       
     - name: Build project
       run: |
@@ -27,10 +27,9 @@ jobs:
         xcodebuild clean build \
           -project Project2026.xcodeproj \
           -scheme Project2026 \
-          -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
           CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO \
-          | xcpretty && exit ${PIPESTATUS[0]}
+          CODE_SIGNING_REQUIRED=NO
       
     - name: Run tests
       run: |
@@ -38,10 +37,9 @@ jobs:
         xcodebuild test \
           -project Project2026.xcodeproj \
           -scheme Project2026 \
-          -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
           CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO \
-          | xcpretty && exit ${PIPESTATUS[0]}
+          CODE_SIGNING_REQUIRED=NO
       continue-on-error: true
       
     - name: Archive build artifacts
