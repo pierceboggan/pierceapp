@@ -18,6 +18,7 @@ public struct TodayView: View {
     @State private var showingAddWater = false
     @State private var showingLogReading = false
     @State private var showingReflection = false
+    @State private var showingMobilityRoutine = false
     
     private var theme: AppTheme { themeService.currentTheme }
     
@@ -52,6 +53,9 @@ public struct TodayView: View {
                     // Today's Cleaning
                     TodayCleaningCard()
                     
+                    // Mobility Routine
+                    MobilityRoutineCard(onTap: { showingMobilityRoutine = true })
+                    
                     // Reflection
                     ReflectionCard(onTap: { showingReflection = true })
                 }
@@ -74,6 +78,9 @@ public struct TodayView: View {
             }
             .sheet(isPresented: $showingReflection) {
                 ReflectionSheet()
+            }
+            .fullScreenCover(isPresented: $showingMobilityRoutine) {
+                MobilityRoutineView()
             }
             .task {
                 await updateDaySummary()
@@ -602,6 +609,42 @@ public struct CleaningTaskRowView: View {
             }
         }
         .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Mobility Routine Card
+
+public struct MobilityRoutineCard: View {
+    let onTap: () -> Void
+    
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    public var body: some View {
+        Button(action: onTap) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Label("Bike Mobility Routine", systemImage: "figure.strengthtraining.traditional")
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                    
+                    Text("10 exercises • ~12 minutes")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .background(theme.card)
+            .cornerRadius(16)
+            .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+        }
+        .buttonStyle(.plain)
     }
 }
 
