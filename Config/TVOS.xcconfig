@@ -1,0 +1,8 @@
+// tvOS App Configuration
+#include "Shared.xcconfig"
+
+PRODUCT_NAME = Project2026TV
+PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.tv
+TVOS_DEPLOYMENT_TARGET = 18.0
+SDKROOT = appletvos
+SUPPORTED_PLATFORMS = appletvos appletvsimulator

@@ -1,0 +1,9 @@
+// macOS App Configuration
+#include "Shared.xcconfig"
+
+PRODUCT_NAME = Project2026Mac
+PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.mac
+MACOSX_DEPLOYMENT_TARGET = 15.0
+SDKROOT = macosx
+SUPPORTED_PLATFORMS = macosx
+CODE_SIGN_ENTITLEMENTS = Config/Project2026Mac.entitlements

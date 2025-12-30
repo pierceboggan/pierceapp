@@ -73,8 +73,8 @@ jobs:
           path: TestResults
           retention-days: 7
 
-  swift-package-test:
-    name: Swift Package Tests
+  build-macos:
+    name: Build macOS App
     runs-on: macos-15
     
     steps:
@@ -84,18 +84,55 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
 
-      - name: Show Swift version
-        run: swift --version
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-macos-deriveddata-${{ hashFiles('**/*.swift', '**/Package.swift', '**/project.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-macos-deriveddata-
 
-      - name: Build Package
-        working-directory: Project2026Package
-        run: swift build
-
-      - name: Run Package Tests
-        working-directory: Project2026Package
+      - name: Build macOS App
         run: |
-          xcodebuild test \
-            -scheme Project2026Feature \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+          xcodebuild build \
+            -project Project2026.xcodeproj \
+            -scheme Project2026Mac \
+            -destination "platform=macOS" \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty --color
+
+  build-tvos:
+    name: Build tvOS App
+    runs-on: macos-15
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-tvos-deriveddata-${{ hashFiles('**/*.swift', '**/Package.swift', '**/project.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-tvos-deriveddata-
+
+      - name: Boot tvOS Simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available | grep "Apple TV" | head -1 | sed -E 's/.*\(([A-F0-9-]+)\).*/\1/')
+          echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+          xcrun simctl boot "$DEVICE_ID" || true
+
+      - name: Build tvOS App
+        run: |
+          xcodebuild build \
+            -project Project2026.xcodeproj \
+            -scheme Project2026TV \
+            -destination "platform=tvOS Simulator,id=$DEVICE_ID" \
+            -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
             | xcpretty --color

@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		8B41F6832DEDD23B001A66F9 /* Project2026Feature in Frameworks */ = {isa = PBXBuildFile; productRef = 8B41F6822DEDD23B001A66F9 /* Project2026Feature */; };
 		8B41F6852DEDD25C001A66F9 /* Project2026Feature in Frameworks */ = {isa = PBXBuildFile; productRef = 8B41F6842DEDD25C001A66F9 /* Project2026Feature */; };
+		8B41F6902DEF0001001A66F9 /* Project2026MacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F68F2DEF0001001A66F9 /* Project2026MacApp.swift */; };
+		8B41F6912DEF0001001A66F9 /* MacContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F68E2DEF0001001A66F9 /* MacContentView.swift */; };
+		8B41F6922DEF0001001A66F9 /* MacMobilityRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F68D2DEF0001001A66F9 /* MacMobilityRoutineView.swift */; };
+		8B41F6932DEF0001001A66F9 /* MacServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F68C2DEF0001001A66F9 /* MacServices.swift */; };
+		8B41F6A02DEF0002001A66F9 /* Project2026TVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F69F2DEF0002001A66F9 /* Project2026TVApp.swift */; };
+		8B41F6A12DEF0002001A66F9 /* TVContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F69E2DEF0002001A66F9 /* TVContentView.swift */; };
+		8B41F6A22DEF0002001A66F9 /* TVMobilityRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F69D2DEF0002001A66F9 /* TVMobilityRoutineView.swift */; };
+		8B41F6A32DEF0002001A66F9 /* TVServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B41F69C2DEF0002001A66F9 /* TVServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +32,16 @@
 /* Begin PBXFileReference section */
 		8B41F6452DEDD0D5001A66F9 /* Project2026.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2026.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B41F65C2DEDD0D6001A66F9 /* Project2026.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Project2026.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B41F6882DEF0001001A66F9 /* Project2026Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2026Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B41F6982DEF0002001A66F9 /* Project2026TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2026TV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B41F68C2DEF0001001A66F9 /* MacServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacServices.swift; sourceTree = "<group>"; };
+		8B41F68D2DEF0001001A66F9 /* MacMobilityRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMobilityRoutineView.swift; sourceTree = "<group>"; };
+		8B41F68E2DEF0001001A66F9 /* MacContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacContentView.swift; sourceTree = "<group>"; };
+		8B41F68F2DEF0001001A66F9 /* Project2026MacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project2026MacApp.swift; sourceTree = "<group>"; };
+		8B41F69C2DEF0002001A66F9 /* TVServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVServices.swift; sourceTree = "<group>"; };
+		8B41F69D2DEF0002001A66F9 /* TVMobilityRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMobilityRoutineView.swift; sourceTree = "<group>"; };
+		8B41F69E2DEF0002001A66F9 /* TVContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVContentView.swift; sourceTree = "<group>"; };
+		8B41F69F2DEF0002001A66F9 /* Project2026TVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project2026TVApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -77,6 +95,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B41F6872DEF0001001A66F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B41F6972DEF0002001A66F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -85,6 +117,8 @@
 			children = (
 				8BD71C052DEE41D800CEDD92 /* Config */,
 				8B41F6472DEDD0D5001A66F9 /* Project2026 */,
+				8B41F68A2DEF0001001A66F9 /* Project2026Mac */,
+				8B41F69A2DEF0002001A66F9 /* Project2026TV */,
 				8B41F65F2DEDD0D6001A66F9 /* Project2026UITests */,
 				8B41F6812DEDD23B001A66F9 /* Frameworks */,
 				8B41F6462DEDD0D5001A66F9 /* Products */,
@@ -96,6 +130,8 @@
 			children = (
 				8B41F6452DEDD0D5001A66F9 /* Project2026.app */,
 				8B41F65C2DEDD0D6001A66F9 /* Project2026.xctest */,
+				8B41F6882DEF0001001A66F9 /* Project2026Mac.app */,
+				8B41F6982DEF0002001A66F9 /* Project2026TV.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +141,44 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8B41F68A2DEF0001001A66F9 /* Project2026Mac */ = {
+			isa = PBXGroup;
+			children = (
+				8B41F68F2DEF0001001A66F9 /* Project2026MacApp.swift */,
+				8B41F68E2DEF0001001A66F9 /* MacContentView.swift */,
+				8B41F68D2DEF0001001A66F9 /* MacMobilityRoutineView.swift */,
+				8B41F68C2DEF0001001A66F9 /* MacServices.swift */,
+				8B41F68B2DEF0001001A66F9 /* Assets.xcassets */,
+			);
+			path = Project2026Mac;
+			sourceTree = "<group>";
+		};
+		8B41F68B2DEF0001001A66F9 /* Assets.xcassets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets.xcassets;
+			sourceTree = "<group>";
+		};
+		8B41F69A2DEF0002001A66F9 /* Project2026TV */ = {
+			isa = PBXGroup;
+			children = (
+				8B41F69F2DEF0002001A66F9 /* Project2026TVApp.swift */,
+				8B41F69E2DEF0002001A66F9 /* TVContentView.swift */,
+				8B41F69D2DEF0002001A66F9 /* TVMobilityRoutineView.swift */,
+				8B41F69C2DEF0002001A66F9 /* TVServices.swift */,
+				8B41F69B2DEF0002001A66F9 /* Assets.xcassets */,
+			);
+			path = Project2026TV;
+			sourceTree = "<group>";
+		};
+		8B41F69B2DEF0002001A66F9 /* Assets.xcassets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets.xcassets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,6 +232,40 @@
 			productReference = 8B41F65C2DEDD0D6001A66F9 /* Project2026.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8B41F6892DEF0001001A66F9 /* Project2026Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B41F6942DEF0001001A66F9 /* Build configuration list for PBXNativeTarget "Project2026Mac" */;
+			buildPhases = (
+				8B41F6862DEF0001001A66F9 /* Sources */,
+				8B41F6872DEF0001001A66F9 /* Frameworks */,
+				8B41F6952DEF0001001A66F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Project2026Mac;
+			productName = Project2026Mac;
+			productReference = 8B41F6882DEF0001001A66F9 /* Project2026Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8B41F6992DEF0002001A66F9 /* Project2026TV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B41F6A42DEF0002001A66F9 /* Build configuration list for PBXNativeTarget "Project2026TV" */;
+			buildPhases = (
+				8B41F6962DEF0002001A66F9 /* Sources */,
+				8B41F6972DEF0002001A66F9 /* Frameworks */,
+				8B41F6A52DEF0002001A66F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Project2026TV;
+			productName = Project2026TV;
+			productReference = 8B41F6982DEF0002001A66F9 /* Project2026TV.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -174,6 +282,12 @@
 					8B41F65B2DEDD0D6001A66F9 = {
 						CreatedOnToolsVersion = 16.3;
 						TestTargetID = 8B41F6442DEDD0D5001A66F9;
+					};
+					8B41F6892DEF0001001A66F9 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					8B41F6992DEF0002001A66F9 = {
+						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
@@ -193,6 +307,8 @@
 			targets = (
 				8B41F6442DEDD0D5001A66F9 /* Project2026 */,
 				8B41F65B2DEDD0D6001A66F9 /* Project2026UITests */,
+				8B41F6892DEF0001001A66F9 /* Project2026Mac */,
+				8B41F6992DEF0002001A66F9 /* Project2026TV */,
 			);
 		};
 /* End PBXProject section */
@@ -206,6 +322,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B41F65A2DEDD0D6001A66F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B41F6952DEF0001001A66F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B41F6A52DEF0002001A66F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -226,6 +356,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B41F6862DEF0001001A66F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B41F6902DEF0001001A66F9 /* Project2026MacApp.swift in Sources */,
+				8B41F6912DEF0001001A66F9 /* MacContentView.swift in Sources */,
+				8B41F6922DEF0001001A66F9 /* MacMobilityRoutineView.swift in Sources */,
+				8B41F6932DEF0001001A66F9 /* MacServices.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B41F6962DEF0002001A66F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B41F6A02DEF0002001A66F9 /* Project2026TVApp.swift in Sources */,
+				8B41F6A12DEF0002001A66F9 /* TVContentView.swift in Sources */,
+				8B41F6A22DEF0002001A66F9 /* TVMobilityRoutineView.swift in Sources */,
+				8B41F6A32DEF0002001A66F9 /* TVServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +587,122 @@
 			};
 			name = Release;
 		};
+		8B41F6B02DEF0001001A66F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Project2026Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Project 2026";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8B41F6B12DEF0001001A66F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Project2026Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Project 2026";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8B41F6B22DEF0002001A66F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Project 2026";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.tv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
+			};
+			name = Debug;
+		};
+		8B41F6B32DEF0002001A66F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Project 2026";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pierceboggan.project2026.tv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -461,6 +729,24 @@
 			buildConfigurations = (
 				8B41F66D2DEDD0D6001A66F9 /* Debug */,
 				8B41F66E2DEDD0D6001A66F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B41F6942DEF0001001A66F9 /* Build configuration list for PBXNativeTarget "Project2026Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B41F6B02DEF0001001A66F9 /* Debug */,
+				8B41F6B12DEF0001001A66F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B41F6A42DEF0002001A66F9 /* Build configuration list for PBXNativeTarget "Project2026TV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B41F6B22DEF0002001A66F9 /* Debug */,
+				8B41F6B32DEF0002001A66F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
