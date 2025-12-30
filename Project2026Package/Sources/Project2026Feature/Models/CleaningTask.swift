@@ -15,6 +15,7 @@ import Foundation
 public struct CleaningTask: Codable, Identifiable, Sendable {
     public let id: UUID
     public var title: String
+    public var area: String
     public var recurrence: CleaningRecurrence
     public var estimatedMinutes: Int?
     public var isActive: Bool
@@ -26,6 +27,7 @@ public struct CleaningTask: Codable, Identifiable, Sendable {
     public init(
         id: UUID = UUID(),
         title: String,
+        area: String = "Main Level",
         recurrence: CleaningRecurrence,
         estimatedMinutes: Int? = nil,
         isActive: Bool = true,
@@ -36,6 +38,7 @@ public struct CleaningTask: Codable, Identifiable, Sendable {
     ) {
         self.id = id
         self.title = title
+        self.area = area
         self.recurrence = recurrence
         self.estimatedMinutes = estimatedMinutes
         self.isActive = isActive
@@ -134,46 +137,96 @@ public enum CleaningRecurrence: Codable, Equatable, Hashable, Sendable {
 // MARK: - Default Cleaning Tasks
 
 extension CleaningTask {
+    /// Helper to create a date offset by days from now.
+    private static func daysAgo(_ days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+    }
+    
     public static let defaultTasks: [CleaningTask] = [
+        // Main Level - Daily
         CleaningTask(
-            title: "Kitchen reset",
+            title: "Start robot vacuum",
+            area: "Main Level",
             recurrence: .daily,
-            estimatedMinutes: 15
+            estimatedMinutes: 2
         ),
         CleaningTask(
-            title: "Floors",
+            title: "Pick up toys",
+            area: "Main Level",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        
+        // Dining Room - Daily
+        CleaningTask(
+            title: "Wipe down countertops",
+            area: "Dining Room",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        
+        // Kitchen - Daily
+        CleaningTask(
+            title: "Wipe countertops",
+            area: "Kitchen",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        
+        // Living Room
+        CleaningTask(
+            title: "Pick up toys",
+            area: "Living Room",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        // Offset by 1 day so it doesn't overlap with Downstairs vacuum
+        CleaningTask(
+            title: "Vacuum",
+            area: "Living Room",
+            recurrence: .custom(days: 2),
+            estimatedMinutes: 15,
+            lastCompletedDate: daysAgo(1)
+        ),
+        
+        // Basement - Daily
+        CleaningTask(
+            title: "Clean desk",
+            area: "Basement",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        
+        // Downstairs
+        CleaningTask(
+            title: "Do one load of laundry",
+            area: "Downstairs",
+            recurrence: .daily,
+            estimatedMinutes: 10
+        ),
+        // No offset - will alternate with Living Room vacuum
+        CleaningTask(
+            title: "Vacuum",
+            area: "Downstairs",
+            recurrence: .custom(days: 2),
+            estimatedMinutes: 15,
+            lastCompletedDate: daysAgo(2)
+        ),
+        
+        // Bathrooms
+        CleaningTask(
+            title: "Wipe countertops",
+            area: "Bathrooms",
+            recurrence: .daily,
+            estimatedMinutes: 5
+        ),
+        // Weekly task offset by 3 days to spread out
+        CleaningTask(
+            title: "Clean toilet",
+            area: "Bathrooms",
             recurrence: .weekly,
-            estimatedMinutes: 30
-        ),
-        CleaningTask(
-            title: "Bathrooms",
-            recurrence: .weekly,
-            estimatedMinutes: 20
-        ),
-        CleaningTask(
-            title: "Laundry",
-            recurrence: .weekly,
-            estimatedMinutes: 60
-        ),
-        CleaningTask(
-            title: "Fridge clean-out",
-            recurrence: .weekly,
-            estimatedMinutes: 15
-        ),
-        CleaningTask(
-            title: "Bedding",
-            recurrence: .biweekly,
-            estimatedMinutes: 30
-        ),
-        CleaningTask(
-            title: "Car clean",
-            recurrence: .monthly,
-            estimatedMinutes: 45
-        ),
-        CleaningTask(
-            title: "Garage/Gear tidy",
-            recurrence: .monthly,
-            estimatedMinutes: 60
+            estimatedMinutes: 10,
+            lastCompletedDate: daysAgo(4)
         )
     ]
 }

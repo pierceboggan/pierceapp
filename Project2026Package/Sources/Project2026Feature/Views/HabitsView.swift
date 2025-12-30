@@ -163,17 +163,19 @@ public struct HabitManagementRow: View {
     @State private var showingEdit = false
     
     private var theme: AppTheme { themeService.currentTheme }
+    private var log: HabitLog? { habitService.logForHabit(habit.id, on: Date()) }
+    private var isCompleted: Bool { log?.completed ?? false }
     
     public var body: some View {
         HStack {
-            // Toggle Active
+            // Toggle Completion (like TodayView)
             Button {
                 Task {
-                    await habitService.toggleHabit(habit)
+                    await habitService.toggleHabitCompletion(habit)
                 }
             } label: {
-                Image(systemName: habit.isActive ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(habit.isActive ? theme.positive : .secondary)
+                Image(systemName: isCompleted ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(isCompleted ? theme.positive : .secondary)
             }
             .buttonStyle(.plain)
             

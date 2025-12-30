@@ -64,6 +64,26 @@ public struct TodayCleaningView: View {
     private var todayTasks: [CleaningTask] { cleaningService.tasksForToday() }
     private var overdueTasks: [CleaningTask] { cleaningService.overdueTasks }
     
+    /// Returns unique areas from today's tasks in order.
+    private var areas: [String] {
+        var seen = Set<String>()
+        return todayTasks.compactMap { task in
+            if seen.contains(task.area) { return nil }
+            seen.insert(task.area)
+            return task.area
+        }
+    }
+    
+    /// Returns unique areas from overdue tasks in order.
+    private var overdueAreas: [String] {
+        var seen = Set<String>()
+        return overdueTasks.compactMap { task in
+            if seen.contains(task.area) { return nil }
+            seen.insert(task.area)
+            return task.area
+        }
+    }
+    
     public var body: some View {
         List {
             // Progress Card
@@ -100,23 +120,33 @@ public struct TodayCleaningView: View {
                 .padding(.vertical, 8)
             }
             
-            // Overdue Tasks
+            // Overdue Tasks (grouped by area)
             if !overdueTasks.isEmpty {
-                Section {
-                    ForEach(overdueTasks) { task in
-                        CleaningTaskRow(task: task)
+                ForEach(overdueAreas, id: \.self) { area in
+                    Section {
+                        ForEach(overdueTasks.filter { $0.area == area }) { task in
+                            CleaningTaskRow(task: task)
+                        }
+                    } header: {
+                        HStack {
+                            Label("Overdue", systemImage: "exclamationmark.triangle.fill")
+                                .foregroundColor(.red)
+                            Text("•")
+                                .foregroundColor(.secondary)
+                            Text(area)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                } header: {
-                    Label("Overdue", systemImage: "exclamationmark.triangle.fill")
-                        .foregroundColor(.red)
                 }
             }
             
-            // Today's Tasks
+            // Today's Tasks (grouped by area)
             if !todayTasks.isEmpty {
-                Section("Today's Tasks") {
-                    ForEach(todayTasks) { task in
-                        CleaningTaskRow(task: task)
+                ForEach(areas, id: \.self) { area in
+                    Section(area) {
+                        ForEach(todayTasks.filter { $0.area == area }) { task in
+                            CleaningTaskRow(task: task)
+                        }
                     }
                 }
             }
@@ -161,13 +191,23 @@ public struct AllTasksView: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    /// Returns unique areas from active tasks in order.
+    private var areas: [String] {
+        var seen = Set<String>()
+        return cleaningService.activeTasks.compactMap { task in
+            if seen.contains(task.area) { return nil }
+            seen.insert(task.area)
+            return task.area
+        }
+    }
+    
     public var body: some View {
         List {
-            // Active Tasks grouped by recurrence
-            ForEach(RecurrenceGroup.allCases, id: \.self) { group in
-                let tasks = tasksForGroup(group)
+            // Active Tasks grouped by area
+            ForEach(areas, id: \.self) { area in
+                let tasks = cleaningService.activeTasks.filter { $0.area == area }
                 if !tasks.isEmpty {
-                    Section(group.title) {
+                    Section(area) {
                         ForEach(tasks) { task in
                             AllTasksRow(task: task)
                         }
@@ -199,33 +239,6 @@ public struct AllTasksView: View {
             }
         }
         .listStyle(.insetGrouped)
-    }
-    
-    enum RecurrenceGroup: CaseIterable {
-        case daily, weekly, biweekly, monthly, other
-        
-        var title: String {
-            switch self {
-            case .daily: return "Daily"
-            case .weekly: return "Weekly"
-            case .biweekly: return "Every 2 Weeks"
-            case .monthly: return "Monthly"
-            case .other: return "Custom"
-            }
-        }
-    }
-    
-    private func tasksForGroup(_ group: RecurrenceGroup) -> [CleaningTask] {
-        cleaningService.activeTasks.filter { task in
-            switch (group, task.recurrence) {
-            case (.daily, .daily): return true
-            case (.weekly, .weekly): return true
-            case (.biweekly, .biweekly): return true
-            case (.monthly, .monthly): return true
-            case (.other, .custom): return true
-            default: return false
-            }
-        }
     }
 }
 

@@ -15,17 +15,38 @@ public struct AddCleaningTaskSheet: View {
     @EnvironmentObject var themeService: ThemeService
     
     @State private var title: String = ""
+    @State private var area: String = "Main Level"
     @State private var recurrence: CleaningRecurrence = .weekly
     @State private var customDays: String = "7"
     @State private var estimatedMinutes: String = ""
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    /// Common areas for cleaning tasks.
+    private let commonAreas = [
+        "Main Level",
+        "Kitchen",
+        "Living Room",
+        "Dining Room",
+        "Bathrooms",
+        "Basement",
+        "Downstairs",
+        "Bedroom",
+        "Garage",
+        "Office"
+    ]
+    
     public var body: some View {
         NavigationStack {
             Form {
                 Section("Task Details") {
                     TextField("Task name", text: $title)
+                    
+                    Picker("Area", selection: $area) {
+                        ForEach(commonAreas, id: \.self) { areaOption in
+                            Text(areaOption).tag(areaOption)
+                        }
+                    }
                     
                     HStack {
                         Text("Estimated time")
@@ -94,6 +115,7 @@ public struct AddCleaningTaskSheet: View {
     private func addTask() {
         let task = CleaningTask(
             title: title.trimmingCharacters(in: .whitespaces),
+            area: area,
             recurrence: finalRecurrence,
             estimatedMinutes: Int(estimatedMinutes)
         )
@@ -115,6 +137,7 @@ public struct EditCleaningTaskSheet: View {
     @EnvironmentObject var themeService: ThemeService
     
     @State private var title: String = ""
+    @State private var area: String = "Main Level"
     @State private var recurrence: CleaningRecurrence = .weekly
     @State private var customDays: String = "7"
     @State private var estimatedMinutes: String = ""
@@ -123,11 +146,31 @@ public struct EditCleaningTaskSheet: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    /// Common areas for cleaning tasks.
+    private let commonAreas = [
+        "Main Level",
+        "Kitchen",
+        "Living Room",
+        "Dining Room",
+        "Bathrooms",
+        "Basement",
+        "Downstairs",
+        "Bedroom",
+        "Garage",
+        "Office"
+    ]
+    
     public var body: some View {
         NavigationStack {
             Form {
                 Section("Task Details") {
                     TextField("Task name", text: $title)
+                    
+                    Picker("Area", selection: $area) {
+                        ForEach(commonAreas, id: \.self) { areaOption in
+                            Text(areaOption).tag(areaOption)
+                        }
+                    }
                     
                     HStack {
                         Text("Estimated time")
@@ -214,6 +257,7 @@ public struct EditCleaningTaskSheet: View {
     
     private func loadTask() {
         title = task.title
+        area = task.area
         recurrence = task.recurrence
         if case .custom(let days) = task.recurrence {
             customDays = String(days)
@@ -234,6 +278,7 @@ public struct EditCleaningTaskSheet: View {
     private func saveTask() {
         var updatedTask = task
         updatedTask.title = title.trimmingCharacters(in: .whitespaces)
+        updatedTask.area = area
         updatedTask.recurrence = finalRecurrence
         updatedTask.estimatedMinutes = Int(estimatedMinutes)
         updatedTask.isActive = isActive

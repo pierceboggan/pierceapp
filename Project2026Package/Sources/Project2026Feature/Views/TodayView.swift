@@ -509,6 +509,16 @@ public struct TodayCleaningCard: View {
     private var theme: AppTheme { themeService.currentTheme }
     private var todayTasks: [CleaningTask] { cleaningService.tasksForToday() }
     
+    /// Returns unique areas from today's tasks in order.
+    private var areas: [String] {
+        var seen = Set<String>()
+        return todayTasks.compactMap { task in
+            if seen.contains(task.area) { return nil }
+            seen.insert(task.area)
+            return task.area
+        }
+    }
+    
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -529,8 +539,18 @@ public struct TodayCleaningCard: View {
                     .foregroundColor(.secondary)
                     .padding(.vertical)
             } else {
-                ForEach(todayTasks) { task in
-                    CleaningTaskRowView(task: task)
+                // Group by area
+                ForEach(areas, id: \.self) { area in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(area)
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+                        
+                        ForEach(todayTasks.filter { $0.area == area }) { task in
+                            CleaningTaskRowView(task: task)
+                        }
+                    }
                 }
             }
         }
@@ -594,18 +614,22 @@ public struct CleaningTaskRowView: View {
             Spacer()
             
             if !isCompleted {
-                Menu {
-                    Button {
-                        Task {
-                            await cleaningService.snoozeTaskForOneDay(task)
-                        }
-                    } label: {
-                        Label("Snooze 1 day", systemImage: "moon.fill")
+                // Defer button - more visible than menu
+                Button {
+                    Task {
+                        await cleaningService.snoozeTaskForOneDay(task)
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle")
-                        .foregroundColor(.secondary)
+                    Text("Defer")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.orange.opacity(0.1))
+                        .foregroundColor(.orange)
+                        .cornerRadius(6)
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(.vertical, 4)
