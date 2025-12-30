@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2320" height="720" viewBox="0 0 2320 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Deep transformation gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F0C29"/>
+      <stop offset="50%" style="stop-color:#302B63"/>
+      <stop offset="100%" style="stop-color:#24243E"/>
+    </linearGradient>
+    <!-- Phoenix/flame gradient -->
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#F12711"/>
+      <stop offset="50%" style="stop-color:#F5AF19"/>
+      <stop offset="100%" style="stop-color:#FFEF5C"/>
+    </linearGradient>
+    <!-- Text gradient -->
+    <linearGradient id="textGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#F5AF19"/>
+      <stop offset="100%" style="stop-color:#FFEF5C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="2320" height="720" fill="url(#bgGrad)"/>
+  
+  <!-- Phoenix flame on left side -->
+  <g transform="translate(300, 60) scale(1.5)">
+    <path d="M200 20 
+             C230 60, 280 100, 270 150
+             C260 180, 230 165, 222 190
+             C238 205, 270 225, 245 235
+             C228 238, 212 230, 200 240
+             C188 230, 172 238, 155 235
+             C130 225, 162 205, 178 190
+             C170 165, 140 180, 130 150
+             C120 100, 170 60, 200 20Z" 
+          fill="url(#flameGrad)"/>
+    <ellipse cx="200" cy="150" rx="40" ry="55" fill="#FFEF5C" opacity="0.5"/>
+    <ellipse cx="200" cy="160" rx="25" ry="40" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- App name -->
+  <text x="950" y="420" font-family="SF Pro Display, -apple-system, Helvetica Neue, Arial" 
+        font-size="120" font-weight="700" fill="url(#textGrad)" text-anchor="left">Project 2026</text>
+  
+  <!-- Tagline -->
+  <text x="950" y="500" font-family="SF Pro Display, -apple-system, Helvetica Neue, Arial" 
+        font-size="48" font-weight="400" fill="white" opacity="0.7" text-anchor="left">Transform Your Life</text>
+</svg>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Energetic gradient -->
+    <linearGradient id="riseGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667EEA"/>
+      <stop offset="100%" style="stop-color:#764BA2"/>
+    </linearGradient>
+    <!-- Accent gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#F093FB"/>
+      <stop offset="100%" style="stop-color:#F5576C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="0" fill="url(#riseGrad)"/>
+  
+  <!-- Abstract rising bars representing progress -->
+  <rect x="180" y="650" width="120" height="200" rx="20" fill="white" opacity="0.3"/>
+  <rect x="340" y="500" width="120" height="350" rx="20" fill="white" opacity="0.5"/>
+  <rect x="500" y="350" width="120" height="500" rx="20" fill="white" opacity="0.7"/>
+  <rect x="660" y="200" width="120" height="650" rx="20" fill="white" opacity="0.9"/>
+  
+  <!-- Large upward arrow overlay -->
+  <path d="M512 120 L720 400 L600 400 L600 850 L424 850 L424 400 L304 400 Z" 
+        fill="url(#accentGrad)" opacity="0.85"/>
+</svg>

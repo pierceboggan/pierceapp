@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Sunrise gradient - hope and new beginnings -->
+    <linearGradient id="sunriseGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="50%" style="stop-color:#FF8C42"/>
+      <stop offset="100%" style="stop-color:#FFD166"/>
+    </linearGradient>
+    <!-- Sky gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A2E"/>
+      <stop offset="100%" style="stop-color:#16213E"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#skyGrad)"/>
+  
+  <!-- Sun rays -->
+  <g opacity="0.6">
+    <line x1="512" y1="380" x2="512" y2="180" stroke="#FFD166" stroke-width="8" stroke-linecap="round"/>
+    <line x1="512" y1="380" x2="680" y2="250" stroke="#FFD166" stroke-width="8" stroke-linecap="round"/>
+    <line x1="512" y1="380" x2="344" y2="250" stroke="#FFD166" stroke-width="8" stroke-linecap="round"/>
+    <line x1="512" y1="380" x2="750" y2="380" stroke="#FFD166" stroke-width="8" stroke-linecap="round"/>
+    <line x1="512" y1="380" x2="274" y2="380" stroke="#FFD166" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Rising sun (half circle) -->
+  <circle cx="512" cy="580" r="200" fill="url(#sunriseGrad)"/>
+  
+  <!-- Horizon line -->
+  <rect x="0" y="580" width="1024" height="444" fill="url(#skyGrad)"/>
+  
+  <!-- Mountain/chevron shape representing climb -->
+  <path d="M512 450 L750 700 L274 700 Z" fill="#0F3460" opacity="0.9"/>
+  <path d="M512 500 L680 700 L344 700 Z" fill="#16213E"/>
+  
+  <!-- Upward arrow in mountain -->
+  <path d="M512 520 L570 620 L535 620 L535 680 L489 680 L489 620 L454 620 Z" fill="url(#sunriseGrad)"/>
+</svg>

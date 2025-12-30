@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Phoenix/flame gradient -->
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#F12711"/>
+      <stop offset="50%" style="stop-color:#F5AF19"/>
+      <stop offset="100%" style="stop-color:#FFEF5C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Front layer - Phoenix flame (transparent background for layering) -->
+  <path d="M200 20 
+           C230 60, 280 100, 270 150
+           C260 180, 230 165, 222 190
+           C238 205, 270 225, 245 235
+           C228 238, 212 230, 200 240
+           C188 230, 172 238, 155 235
+           C130 225, 162 205, 178 190
+           C170 165, 140 180, 130 150
+           C120 100, 170 60, 200 20Z" 
+        fill="url(#flameGrad)"/>
+  
+  <!-- Inner glow -->
+  <ellipse cx="200" cy="150" rx="40" ry="55" fill="#FFEF5C" opacity="0.5"/>
+  <ellipse cx="200" cy="160" rx="25" ry="40" fill="white" opacity="0.4"/>
+</svg>

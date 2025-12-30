@@ -143,10 +143,11 @@ public class CalendarService: ObservableObject {
     private let eventStore = EKEventStore()
     
     /// Keywords to identify workout events in calendar titles.
+    /// Note: "mobility" is excluded as it's tracked separately in-app.
     private let workoutKeywords = [
         "workout", "training", "trainerroad", "trainer road",
         "cycling", "bike", "ride", "run", "running", "swim",
-        "strength", "gym", "hiit", "yoga", "mobility",
+        "strength", "gym", "hiit", "yoga",
         "interval", "tempo", "endurance", "recovery",
         "zwift", "peloton", "spin", "tss", "ftp"
     ]

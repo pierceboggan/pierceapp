@@ -74,7 +74,7 @@ jobs:
           retention-days: 7
 
   build-macos:
-    name: Build macOS App
+    name: Build and Test macOS App
     runs-on: macos-15
     
     steps:
@@ -92,9 +92,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-macos-deriveddata-
 
-      - name: Build macOS App
+      - name: Build and Test macOS App
         run: |
-          xcodebuild build \
+          xcodebuild test \
             -project Project2026.xcodeproj \
             -scheme Project2026Mac \
             -destination "platform=macOS" \
@@ -103,7 +103,7 @@ jobs:
             | xcpretty --color
 
   build-tvos:
-    name: Build tvOS App
+    name: Build and Test tvOS App
     runs-on: macos-15
     
     steps:
@@ -127,9 +127,9 @@ jobs:
           echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
           xcrun simctl boot "$DEVICE_ID" || true
 
-      - name: Build tvOS App
+      - name: Build and Test tvOS App
         run: |
-          xcodebuild build \
+          xcodebuild test \
             -project Project2026.xcodeproj \
             -scheme Project2026TV \
             -destination "platform=tvOS Simulator,id=$DEVICE_ID" \

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Ocean to sky gradient -->
+    <linearGradient id="momentumGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0052D4"/>
+      <stop offset="50%" style="stop-color:#4364F7"/>
+      <stop offset="100%" style="stop-color:#6FB1FC"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#momentumGrad)"/>
+  
+  <!-- Stacked chevrons creating momentum effect -->
+  <g fill="white">
+    <!-- Bottom chevron (most opaque) -->
+    <path d="M512 750 L300 550 L370 550 L512 680 L654 550 L724 550 Z" opacity="0.3"/>
+    
+    <!-- Middle chevron -->
+    <path d="M512 600 L300 400 L370 400 L512 530 L654 400 L724 400 Z" opacity="0.5"/>
+    
+    <!-- Upper middle chevron -->
+    <path d="M512 450 L300 250 L370 250 L512 380 L654 250 L724 250 Z" opacity="0.7"/>
+    
+    <!-- Top chevron (brightest) -->
+    <path d="M512 300 L300 100 L370 100 L512 230 L654 100 L724 100 Z" opacity="1.0"/>
+  </g>
+</svg>

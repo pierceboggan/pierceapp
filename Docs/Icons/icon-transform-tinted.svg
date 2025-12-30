@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Monochrome gradient for tinted mode -->
+    <linearGradient id="tintedGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#1A1A1A"/>
+      <stop offset="100%" style="stop-color:#4A4A4A"/>
+    </linearGradient>
+    <!-- White flame for tinted (system applies color) -->
+    <linearGradient id="flameTinted" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#CCCCCC"/>
+      <stop offset="50%" style="stop-color:#E5E5E5"/>
+      <stop offset="100%" style="stop-color:#FFFFFF"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background - neutral for tint -->
+  <rect width="1024" height="1024" fill="url(#tintedGrad)"/>
+  
+  <!-- Phoenix/flame rising shape - grayscale for tint overlay -->
+  <path d="M512 100 
+           C580 200, 700 300, 680 450
+           C660 550, 580 500, 560 580
+           C600 620, 680 680, 620 800
+           C580 850, 540 820, 512 900
+           C484 820, 444 850, 404 800
+           C344 680, 424 620, 464 580
+           C444 500, 364 550, 344 450
+           C324 300, 444 200, 512 100Z" 
+        fill="url(#flameTinted)"/>
+  
+  <!-- Inner glow -->
+  <ellipse cx="512" cy="500" rx="100" ry="150" fill="white" opacity="0.4"/>
+  <ellipse cx="512" cy="550" rx="60" ry="100" fill="white" opacity="0.5"/>
+</svg>

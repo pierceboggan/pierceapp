@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Modern gradient -->
+    <linearGradient id="modernGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#11998E"/>
+      <stop offset="100%" style="stop-color:#38EF7D"/>
+    </linearGradient>
+    <!-- Text gradient -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E0E0E0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#1A1A2E"/>
+  
+  <!-- Circular progress ring -->
+  <circle cx="512" cy="512" r="400" fill="none" stroke="#2D2D44" stroke-width="40"/>
+  <circle cx="512" cy="512" r="400" fill="none" stroke="url(#modernGrad)" stroke-width="40"
+          stroke-dasharray="2200" stroke-dashoffset="550" stroke-linecap="round"
+          transform="rotate(-90 512 512)"/>
+  
+  <!-- "26" text stylized -->
+  <text x="512" y="580" font-family="SF Pro Display, -apple-system, Helvetica Neue, Arial" 
+        font-size="320" font-weight="800" fill="url(#textGrad)" text-anchor="middle">26</text>
+  
+  <!-- Upward chevron above -->
+  <path d="M512 200 L600 300 L560 300 L560 340 L464 340 L464 300 L424 300 Z" 
+        fill="url(#modernGrad)"/>
+</svg>
