@@ -4,8 +4,10 @@ import SwiftUI
 @MainActor
 struct MobilityRoutineView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var workoutService: WorkoutService
     @State private var timerService = MobilityTimerService()
     @State private var showInstructions = false
+    @State private var startTime: Date?
     
     var body: some View {
         NavigationStack {
@@ -61,6 +63,7 @@ struct MobilityRoutineView: View {
                 .foregroundStyle(.secondary)
             
             Button {
+                startTime = Date()
                 timerService.start()
             } label: {
                 Text("Start Routine")
@@ -202,7 +205,9 @@ struct MobilityRoutineView: View {
                 .multilineTextAlignment(.center)
             
             Button {
+                startTime = Date()
                 timerService.reset()
+                timerService.start()
             } label: {
                 Text("Start Again")
                     .font(.headline)
@@ -216,6 +221,7 @@ struct MobilityRoutineView: View {
             .padding(.top, 16)
             
             Button {
+                logMobilityCompletion()
                 dismiss()
             } label: {
                 Text("Done")
@@ -229,8 +235,26 @@ struct MobilityRoutineView: View {
         }
         .padding()
     }
+    
+    private func logMobilityCompletion() {
+        let duration: Int
+        if let start = startTime {
+            duration = Int(Date().timeIntervalSince(start) / 60)
+        } else {
+            duration = MobilityRoutine.bikeRoutine.totalDuration / 60
+        }
+        
+        Task {
+            await workoutService.logMobilitySession(
+                durationMinutes: max(duration, 1),
+                exercisesCompleted: MobilityRoutine.bikeRoutine.exercises.count,
+                totalExercises: MobilityRoutine.bikeRoutine.exercises.count
+            )
+        }
+    }
 }
 
 #Preview {
     MobilityRoutineView()
+        .environmentObject(WorkoutService())
 }

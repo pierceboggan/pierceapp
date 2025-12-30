@@ -9,6 +9,7 @@ struct Project2026App: App {
     @StateObject private var waterService = WaterService()
     @StateObject private var readingService = ReadingService()
     @StateObject private var daySummaryService = DaySummaryService()
+    @StateObject private var workoutService = WorkoutService()
     
     var body: some Scene {
         WindowGroup {
@@ -19,6 +20,7 @@ struct Project2026App: App {
                 .environmentObject(waterService)
                 .environmentObject(readingService)
                 .environmentObject(daySummaryService)
+                .environmentObject(workoutService)
                 .preferredColorScheme(themeService.currentTheme.colorScheme)
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                     // Update widget data when app goes to background

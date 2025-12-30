@@ -83,20 +83,6 @@ struct SettingsView: View {
                     } label: {
                         Label("My Books", systemImage: "books.vertical.fill")
                     }
-                    
-                    HStack {
-                        Label("Goodreads", systemImage: "link")
-                        Spacer()
-                        if readingService.goodreadsAccount.isConnected {
-                            Text("Connected")
-                                .font(.caption)
-                                .foregroundColor(theme.positive)
-                        } else {
-                            Text("Not Connected")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
                 }
                 
                 // Data Section

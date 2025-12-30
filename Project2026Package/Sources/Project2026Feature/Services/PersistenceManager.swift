@@ -76,4 +76,6 @@ public enum StorageKey {
     public static let books = "books.json"
     public static let readingSessions = "reading_sessions.json"
     public static let daySummaries = "day_summaries.json"
+    public static let workouts = "workouts.json"
+    public static let mobilityLogs = "mobility_logs.json"
 }

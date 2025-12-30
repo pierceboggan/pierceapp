@@ -25,6 +25,9 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Show Swift version
+        run: swift --version
+
       - name: Cache DerivedData
         uses: actions/cache@v4
         with:
@@ -33,15 +36,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-deriveddata-
 
-      - name: List available simulators
-        run: xcrun simctl list devices available
+      - name: Boot Simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available | grep "iPhone 16" | grep -v Plus | head -1 | sed -E 's/.*\(([A-F0-9-]+)\).*/\1/')
+          echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+          xcrun simctl boot "$DEVICE_ID" || true
+          xcrun simctl list devices | grep Booted
 
       - name: Build
         run: |
           xcodebuild build \
             -workspace Project2026.xcworkspace \
             -scheme Project2026 \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination "platform=iOS Simulator,id=$DEVICE_ID" \
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
             | xcpretty --color
@@ -51,7 +58,8 @@ jobs:
           xcodebuild test \
             -workspace Project2026.xcworkspace \
             -scheme Project2026 \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination "platform=iOS Simulator,id=$DEVICE_ID" \
+            -testPlan Project2026 \
             -configuration Debug \
             -resultBundlePath TestResults \
             CODE_SIGNING_ALLOWED=NO \
@@ -76,6 +84,18 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
 
+      - name: Show Swift version
+        run: swift --version
+
+      - name: Build Package
+        working-directory: Project2026Package
+        run: swift build
+
       - name: Run Package Tests
         working-directory: Project2026Package
-        run: swift test
+        run: |
+          xcodebuild test \
+            -scheme Project2026Feature \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty --color
