@@ -39,10 +39,9 @@ Based on [prd.md](prd.md), the following items are not yet implemented.
 ## Low Priority / Future
 
 ### TrainerRoad Integration (Optional)
-TrainerRoad supports calendar export (ICS feed) to iCloud/Google Calendar. However, this is **one-way sync of planned workouts only** - completed workout data is not exported. For now, use the "Open TrainerRoad" button in the Fitness tab to view scheduled workouts, then manually log completed workouts.
+TrainerRoad supports calendar export (ICS feed) to iCloud/Google Calendar. The app now reads planned workouts from your calendar using EventKit.
 
-- [ ] Set up TrainerRoad calendar sync with iCloud for viewing scheduled workouts
-- [ ] Consider EventKit integration to read planned workouts from calendar
+- [x] EventKit integration to read planned workouts from iCloud Calendar
 - [ ] Authenticate with TrainerRoad API (requires OAuth) for completed workout data
 
 ### Supabase Sync (Optional)
@@ -89,6 +88,7 @@ TrainerRoad supports calendar export (ICS feed) to iCloud/Google Calendar. Howev
 - [x] Weekly workout/mobility goal progress (6x/week targets)
 - [x] Deep link to open TrainerRoad app from Fitness tab
 - [x] Deep link to open Audible app from Reading card
+- [x] iCloud Calendar integration for planned workouts via EventKit
 
 ---
 

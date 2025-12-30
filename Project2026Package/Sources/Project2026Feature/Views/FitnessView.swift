@@ -11,6 +11,7 @@ import SwiftUI
 public struct FitnessView: View {
     @EnvironmentObject var themeService: ThemeService
     @EnvironmentObject var workoutService: WorkoutService
+    @StateObject private var calendarService = CalendarService()
     
     @State private var showingAddWorkout = false
     @State private var showingMobilityRoutine = false
@@ -24,6 +25,9 @@ public struct FitnessView: View {
                 VStack(spacing: 20) {
                     // Weekly Summary Card
                     FitnessWeeklySummaryCard()
+                    
+                    // Upcoming Workouts from Calendar
+                    UpcomingWorkoutsSection(calendarService: calendarService)
                     
                     // Quick Actions
                     HStack(spacing: 12) {
@@ -749,6 +753,355 @@ public struct AddWorkoutSheet: View {
         Task {
             await workoutService.addWorkout(workout)
             dismiss()
+        }
+    }
+}
+
+// MARK: - Upcoming Workouts Section
+
+/// Displays planned workouts from iCloud Calendar.
+struct UpcomingWorkoutsSection: View {
+    @ObservedObject var calendarService: CalendarService
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Label("Planned Workouts", systemImage: "calendar")
+                    .font(.headline)
+                
+                Spacer()
+                
+                if calendarService.isLoading {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                } else if calendarService.authorizationStatus == .authorized {
+                    Button {
+                        Task {
+                            await calendarService.refresh()
+                        }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.subheadline)
+                    }
+                }
+            }
+            .padding(.horizontal)
+            
+            switch calendarService.authorizationStatus {
+            case .notDetermined:
+                CalendarPermissionCard(calendarService: calendarService)
+                
+            case .denied, .restricted:
+                CalendarDeniedCard()
+                
+            case .authorized:
+                if calendarService.plannedWorkouts.isEmpty {
+                    NoPlannedWorkoutsCard()
+                } else {
+                    PlannedWorkoutsList(workouts: calendarService.plannedWorkouts)
+                }
+            }
+        }
+        .task {
+            if calendarService.authorizationStatus == .authorized {
+                await calendarService.fetchUpcomingWorkouts()
+            }
+        }
+    }
+}
+
+// MARK: - Calendar Permission Card
+
+struct CalendarPermissionCard: View {
+    @ObservedObject var calendarService: CalendarService
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "calendar.badge.clock")
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+            
+            Text("Connect Your Calendar")
+                .font(.headline)
+            
+            Text("See your planned workouts from TrainerRoad, Strava, and other fitness apps right here.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Button {
+                Task {
+                    await calendarService.requestAccess()
+                }
+            } label: {
+                Label("Allow Calendar Access", systemImage: "calendar")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+        }
+        .padding()
+        .background(theme.card)
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+    }
+}
+
+// MARK: - Calendar Denied Card
+
+struct CalendarDeniedCard: View {
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "calendar.badge.exclamationmark")
+                .font(.largeTitle)
+                .foregroundColor(.orange)
+            
+            Text("Calendar Access Denied")
+                .font(.headline)
+            
+            Text("Enable calendar access in Settings to see your planned workouts.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Button {
+                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(settingsURL)
+                }
+            } label: {
+                Label("Open Settings", systemImage: "gear")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+        }
+        .padding()
+        .background(theme.card)
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+    }
+}
+
+// MARK: - No Planned Workouts Card
+
+struct NoPlannedWorkoutsCard: View {
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "calendar")
+                .font(.title2)
+                .foregroundColor(.secondary)
+            
+            Text("No planned workouts")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Text("Workouts from TrainerRoad and other apps will appear here")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(theme.card)
+        .cornerRadius(12)
+    }
+}
+
+// MARK: - Planned Workouts List
+
+struct PlannedWorkoutsList: View {
+    let workouts: [PlannedWorkout]
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            // Today's workouts
+            let todaysWorkouts = workouts.filter { $0.isToday }
+            if !todaysWorkouts.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Today")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                    
+                    ForEach(todaysWorkouts) { workout in
+                        PlannedWorkoutRow(workout: workout, isToday: true)
+                    }
+                }
+            }
+            
+            // Upcoming workouts
+            let upcomingWorkouts = workouts.filter { !$0.isToday && !$0.isPast }
+            if !upcomingWorkouts.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Coming Up")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                        .padding(.top, todaysWorkouts.isEmpty ? 0 : 8)
+                    
+                    ForEach(upcomingWorkouts.prefix(5)) { workout in
+                        PlannedWorkoutRow(workout: workout, isToday: false)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Planned Workout Row
+
+struct PlannedWorkoutRow: View {
+    let workout: PlannedWorkout
+    let isToday: Bool
+    
+    @EnvironmentObject var themeService: ThemeService
+    @State private var isExpanded = false
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Main row content
+            HStack(spacing: 12) {
+                // Calendar color indicator
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(workout.calendarColor)
+                    .frame(width: 4, height: workout.metrics?.hasMetrics == true ? 60 : 44)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(workout.title)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                    
+                    // Time and duration row
+                    HStack(spacing: 8) {
+                        Label(workout.formattedTime, systemImage: "clock")
+                        Label(workout.formattedDuration, systemImage: "timer")
+                        
+                        // FTP range if available
+                        if let ftpRange = workout.metrics?.ftpRange {
+                            Text(ftpRange + " FTP")
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 1)
+                                .background(Color.orange.opacity(0.15))
+                                .foregroundColor(.orange)
+                                .cornerRadius(3)
+                        }
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    
+                    // Metrics row (TSS, IF, kJ) if available
+                    if let metrics = workout.metrics, metrics.hasMetrics {
+                        HStack(spacing: 8) {
+                            if let tss = metrics.formattedTSS {
+                                Label(tss, systemImage: "bolt.fill")
+                                    .foregroundColor(.yellow)
+                            }
+                            if let ifValue = metrics.formattedIF {
+                                Label(ifValue, systemImage: "gauge.with.dots.needle.33percent")
+                                    .foregroundColor(.blue)
+                            }
+                            if let kj = metrics.formattedEnergy {
+                                Label(kj, systemImage: "flame.fill")
+                                    .foregroundColor(.orange)
+                            }
+                        }
+                        .font(.caption2)
+                    }
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(formattedDate)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    if isToday {
+                        Text("Today")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.blue.opacity(0.1))
+                            .foregroundColor(.blue)
+                            .cornerRadius(4)
+                    }
+                    
+                    // Expand button if description available
+                    if workout.metrics?.description != nil {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                isExpanded.toggle()
+                            }
+                        } label: {
+                            Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            .padding()
+            
+            // Expanded description section
+            if isExpanded, let description = workout.shortDescription {
+                Divider()
+                    .padding(.horizontal)
+                
+                Text(description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .lineLimit(4)
+            }
+        }
+        .background(theme.card)
+        .cornerRadius(12)
+    }
+    
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(workout.startDate) {
+            return "Today"
+        } else if calendar.isDateInTomorrow(workout.startDate) {
+            return "Tomorrow"
+        } else {
+            formatter.dateFormat = "EEE, MMM d"
+            return formatter.string(from: workout.startDate)
         }
     }
 }

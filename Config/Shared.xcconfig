@@ -16,3 +16,6 @@ SWIFT_VERSION = 6.0
 // Development Team (set to your team ID or Automatic)
 DEVELOPMENT_TEAM = 
 CODE_SIGN_STYLE = Automatic
+
+// Privacy Usage Descriptions (for generated Info.plist)
+INFOPLIST_KEY_NSCalendarsUsageDescription = Project2026 reads your calendar to show planned workouts from TrainerRoad and other fitness apps.
