@@ -11,7 +11,7 @@ import Foundation
 
 /// Represents a book being tracked for reading progress.
 /// Tracks current page, total pages, and reading status (want to read, reading, finished).
-/// Can optionally sync with Goodreads via API integration.
+/// All book data is entered manually by the user.
 public struct Book: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public var title: String
@@ -19,7 +19,6 @@ public struct Book: Codable, Identifiable, Hashable, Sendable {
     public var totalPages: Int
     public var currentPage: Int
     public var coverURL: URL?
-    public var goodreadsId: String?
     public var status: BookStatus
     public var startDate: Date?
     public var finishDate: Date?
@@ -29,11 +28,10 @@ public struct Book: Codable, Identifiable, Hashable, Sendable {
     public init(
         id: UUID = UUID(),
         title: String,
-        author: String,
+        author: String = "",
         totalPages: Int,
         currentPage: Int = 0,
         coverURL: URL? = nil,
-        goodreadsId: String? = nil,
         status: BookStatus = .wantToRead,
         startDate: Date? = nil,
         finishDate: Date? = nil,
@@ -46,7 +44,6 @@ public struct Book: Codable, Identifiable, Hashable, Sendable {
         self.totalPages = totalPages
         self.currentPage = currentPage
         self.coverURL = coverURL
-        self.goodreadsId = goodreadsId
         self.status = status
         self.startDate = startDate
         self.finishDate = finishDate
@@ -111,8 +108,8 @@ public struct ReadingSession: Codable, Identifiable, Sendable {
         pagesRead: Int,
         durationMinutes: Int? = nil,
         note: String? = nil,
-        startPage: Int,
-        endPage: Int
+        startPage: Int = 0,
+        endPage: Int = 0
     ) {
         self.id = id
         self.bookId = bookId
@@ -157,26 +154,4 @@ public struct ReadingProgress: Codable, Identifiable, Sendable {
     }
 }
 
-// MARK: - Goodreads Account
 
-public struct GoodreadsAccount: Codable, Sendable {
-    public var isConnected: Bool
-    public var userId: String?
-    public var accessToken: String?
-    public var refreshToken: String?
-    public var lastSyncDate: Date?
-    
-    public init(
-        isConnected: Bool = false,
-        userId: String? = nil,
-        accessToken: String? = nil,
-        refreshToken: String? = nil,
-        lastSyncDate: Date? = nil
-    ) {
-        self.isConnected = isConnected
-        self.userId = userId
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        self.lastSyncDate = lastSyncDate
-    }
-}

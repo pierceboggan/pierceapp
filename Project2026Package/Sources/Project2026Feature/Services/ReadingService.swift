@@ -9,14 +9,12 @@ import SwiftUI
 
 /// Manages book library and reading session tracking.
 /// Tracks pages read per day, maintains reading history, and identifies the primary book.
-/// Supports Goodreads account connection for future sync capabilities.
+/// All book data is entered and managed manually by the user.
 @MainActor
 public class ReadingService: ObservableObject {
     @Published var books: [Book] = []
     @Published var readingSessions: [ReadingSession] = []
-    @Published var goodreadsAccount: GoodreadsAccount = GoodreadsAccount()
     @Published var isLoading = false
-    @Published var isSyncing = false
     
     private let persistence = PersistenceManager.shared
     
@@ -42,12 +40,6 @@ public class ReadingService: ObservableObject {
             readingSessions = try await persistence.load([ReadingSession].self, from: StorageKey.readingSessions)
         } catch {
             readingSessions = []
-        }
-        
-        do {
-            goodreadsAccount = try await persistence.load(GoodreadsAccount.self, from: StorageKey.goodreadsAccount)
-        } catch {
-            goodreadsAccount = GoodreadsAccount()
         }
     }
     
@@ -216,44 +208,6 @@ public class ReadingService: ObservableObject {
         }.count
     }
     
-    // MARK: - Goodreads Integration (Placeholder)
-    
-    public func connectGoodreads() async {
-        // OAuth flow would go here
-        // For v1, this is a placeholder
-        isSyncing = true
-        defer { isSyncing = false }
-        
-        // Simulate connection
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        
-        // In a real implementation:
-        // 1. Open OAuth URL
-        // 2. Handle callback
-        // 3. Store tokens
-        // 4. Fetch currently reading shelf
-    }
-    
-    public func disconnectGoodreads() async {
-        goodreadsAccount = GoodreadsAccount()
-        await saveGoodreadsAccount()
-    }
-    
-    public func syncWithGoodreads() async {
-        guard goodreadsAccount.isConnected else { return }
-        
-        isSyncing = true
-        defer { isSyncing = false }
-        
-        // In a real implementation:
-        // 1. Fetch currently-reading shelf
-        // 2. Update local books with Goodreads data
-        // 3. Handle conflicts
-        
-        goodreadsAccount.lastSyncDate = Date()
-        await saveGoodreadsAccount()
-    }
-    
     // MARK: - Persistence
     
     private func saveBooks() async {
@@ -269,14 +223,6 @@ public class ReadingService: ObservableObject {
             try await persistence.save(readingSessions, to: StorageKey.readingSessions)
         } catch {
             print("Failed to save reading sessions: \(error)")
-        }
-    }
-    
-    private func saveGoodreadsAccount() async {
-        do {
-            try await persistence.save(goodreadsAccount, to: StorageKey.goodreadsAccount)
-        } catch {
-            print("Failed to save Goodreads account: \(error)")
         }
     }
 }

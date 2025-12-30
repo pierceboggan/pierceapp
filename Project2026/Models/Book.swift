@@ -16,7 +16,6 @@ struct Book: Codable, Identifiable, Hashable {
     var totalPages: Int
     var currentPage: Int
     var coverURL: URL?
-    var goodreadsId: String?
     var status: BookStatus
     var startDate: Date?
     var finishDate: Date?
@@ -26,11 +25,10 @@ struct Book: Codable, Identifiable, Hashable {
     init(
         id: UUID = UUID(),
         title: String,
-        author: String,
+        author: String = "",
         totalPages: Int,
         currentPage: Int = 0,
         coverURL: URL? = nil,
-        goodreadsId: String? = nil,
         status: BookStatus = .wantToRead,
         startDate: Date? = nil,
         finishDate: Date? = nil,
@@ -43,7 +41,6 @@ struct Book: Codable, Identifiable, Hashable {
         self.totalPages = totalPages
         self.currentPage = currentPage
         self.coverURL = coverURL
-        self.goodreadsId = goodreadsId
         self.status = status
         self.startDate = startDate
         self.finishDate = finishDate
@@ -106,8 +103,8 @@ struct ReadingSession: Codable, Identifiable {
         pagesRead: Int,
         durationMinutes: Int? = nil,
         note: String? = nil,
-        startPage: Int,
-        endPage: Int
+        startPage: Int = 0,
+        endPage: Int = 0
     ) {
         self.id = id
         self.bookId = bookId
@@ -150,26 +147,4 @@ struct ReadingProgress: Codable, Identifiable {
     }
 }
 
-// MARK: - Goodreads Account
 
-struct GoodreadsAccount: Codable {
-    var isConnected: Bool
-    var userId: String?
-    var accessToken: String?
-    var refreshToken: String?
-    var lastSyncDate: Date?
-    
-    init(
-        isConnected: Bool = false,
-        userId: String? = nil,
-        accessToken: String? = nil,
-        refreshToken: String? = nil,
-        lastSyncDate: Date? = nil
-    ) {
-        self.isConnected = isConnected
-        self.userId = userId
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        self.lastSyncDate = lastSyncDate
-    }
-}

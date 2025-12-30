@@ -9,7 +9,7 @@ Project 2026 is a personal life OS that helps make 2026 your best year by:
 - Keeping visibility effortless via a home screen widget
 - Making reflection easy through ChatGPT review summaries
 - Tracking water consumption meaningfully
-- Tracking reading progress, with optional Goodreads integration
+- Tracking reading progress with manual book entry
 
 Single-user only for v1. Future-proofed for theming, analytics, & possible multi-user expansion.
 
@@ -238,7 +238,6 @@ WidgetKit powered.
 - Book
 - ReadingSession
 - ReadingProgress
-- GoodreadsAccount
 
 ---
 
@@ -265,34 +264,24 @@ Meaningful hydration tracking, not just checkbox.
 
 ---
 
-## 9. Reading Tracker + Goodreads Integration
+## 9. Reading Tracker
 
 ### Purpose
 Enhance "Read a chapter a day" via real reading progress.
 
 ### Requirements
 
-#### Local Reading Tracker
-- Add books
-- Store:
+#### Manual Book Entry
+- Add books with:
   - title
-  - author
-  - pages
-  - cover
+  - author (optional)
+  - total pages
+  - current page
 - Track:
   - reading sessions
   - pages read
-  - minutes
+  - minutes (optional)
   - completion %
-
-#### Goodreads Integration
-- Sign in via OAuth
-- Pull:
-  - currently reading shelf
-  - book metadata
-- Sync:
-  - active reading state
-- Allow manual mode if Goodreads unavailable
 
 ### UX
 
@@ -305,13 +294,12 @@ Enhance "Read a chapter a day" via real reading progress.
 #### Logging Reading
 - Select book (if multiple)
 - Enter:
-  - pages
+  - pages read
   - optional note
 
-#### Failure Mode
-- Works offline
-- Uses last synced Goodreads state
-- Falls back to local persistence
+#### Data Storage
+- All data stored locally
+- Works fully offline
 
 ---
 
@@ -360,7 +348,6 @@ SwiftUI + MVVM
 - DaySummaryService
 - WaterService
 - ReadingService
-- GoodreadsService
 - ExportService
 - ThemeService
 - SupabaseSyncService (optional)

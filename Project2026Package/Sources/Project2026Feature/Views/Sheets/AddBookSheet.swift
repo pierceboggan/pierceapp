@@ -25,7 +25,7 @@ public struct AddBookSheet: View {
             Form {
                 Section("Book Details") {
                     TextField("Title", text: $title)
-                    TextField("Author", text: $author)
+                    TextField("Author (optional)", text: $author)
                     
                     HStack {
                         Text("Total Pages")
@@ -57,19 +57,6 @@ public struct AddBookSheet: View {
                     }
                 }
                 
-                // Goodreads Integration Placeholder
-                Section {
-                    HStack {
-                        Image(systemName: "link")
-                            .foregroundColor(.secondary)
-                        Text("Connect Goodreads")
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("Coming Soon")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
             }
             .navigationTitle("Add Book")
             .navigationBarTitleDisplayMode(.inline)
@@ -93,7 +80,6 @@ public struct AddBookSheet: View {
     
     private var isValid: Bool {
         !title.isEmpty &&
-        !author.isEmpty &&
         (Int(totalPages) ?? 0) > 0
     }
     

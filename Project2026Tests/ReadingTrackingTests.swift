@@ -111,22 +111,4 @@ final class ReadingTrackingTests: XCTestCase {
             Calendar.current.startOfDay(for: Date())
         )
     }
-    
-    // MARK: - Goodreads Account Tests
-    
-    func testGoodreadsAccountDefaultNotConnected() {
-        let account = GoodreadsAccount()
-        
-        XCTAssertFalse(account.isConnected)
-        XCTAssertNil(account.userId)
-        XCTAssertNil(account.accessToken)
-    }
-    
-    func testGoodreadsAccountConnectedWhenHasCredentials() {
-        var account = GoodreadsAccount()
-        account.userId = "123"
-        account.accessToken = "token"
-        
-        XCTAssertTrue(account.isConnected)
-    }
 }

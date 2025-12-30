@@ -6,12 +6,6 @@ Based on [prd.md](prd.md), the following items are not yet implemented.
 
 ## High Priority
 
-### Goodreads Integration
-- [ ] Implement OAuth sign-in flow
-- [ ] Fetch "currently reading" shelf from Goodreads API
-- [ ] Sync book metadata (title, author, cover, pages)
-- [ ] Handle offline fallback to local data
-
 ### Today Screen Enhancements
 - [ ] Add Work Balance indicator (track 9–5:30 schedule)
 - [ ] Add Outdoors Reminder card
@@ -72,7 +66,7 @@ Based on [prd.md](prd.md), the following items are not yet implemented.
 - [x] Cleaning rotation with recurrence patterns (daily, weekly, biweekly, monthly, custom)
 - [x] Cleaning task snooze functionality
 - [x] Water tracking with quick-add buttons (8oz, 16oz, 24oz, 32oz)
-- [x] Reading tracker (local books, sessions, progress)
+- [x] Reading tracker (local books with manual entry, sessions, progress)
 - [x] Daily score calculation (50% habits, 20% cleaning, 15% water, 15% reading)
 - [x] History calendar view with day summaries
 - [x] Weekly summary aggregation

@@ -73,5 +73,4 @@ enum StorageKey {
     static let books = "books.json"
     static let readingSessions = "reading_sessions.json"
     static let daySummaries = "day_summaries.json"
-    static let goodreadsAccount = "goodreads_account.json"
 }
