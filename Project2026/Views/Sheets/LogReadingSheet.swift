@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LogReadingSheet: View {
+    /// The date to log reading for (defaults to today).
+    var selectedDate: Date = Date()
+    
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var readingService: ReadingService
     @EnvironmentObject var themeService: ThemeService
@@ -25,6 +28,24 @@ struct LogReadingSheet: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     private var currentBooks: [Book] { readingService.currentlyReading }
+    
+    /// Check if the selected date is today.
+    private var isToday: Bool {
+        Calendar.current.isDateInToday(selectedDate)
+    }
+    
+    /// Formatted date label for display.
+    private var dateLabel: String {
+        if isToday {
+            return "Log Reading"
+        } else if Calendar.current.isDateInYesterday(selectedDate) {
+            return "Log for Yesterday"
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM d"
+            return "Log for \(formatter.string(from: selectedDate))"
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -138,7 +159,7 @@ struct LogReadingSheet: View {
                     }
                 }
             }
-            .navigationTitle("Log Reading")
+            .navigationTitle(dateLabel)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -189,7 +210,8 @@ struct LogReadingSheet: View {
                     book: book,
                     pagesRead: pages,
                     durationMinutes: duration,
-                    note: note.isEmpty ? nil : note
+                    note: note.isEmpty ? nil : note,
+                    on: selectedDate
                 )
             } else {
                 await readingService.updateProgress(book: book, currentPage: pages)

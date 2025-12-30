@@ -63,13 +63,18 @@ class WaterService: ObservableObject {
     // MARK: - Adding Water
     
     func addWater(_ amount: Double) async {
-        let today = Calendar.current.startOfDay(for: Date())
+        await addWater(amount, on: Date())
+    }
+    
+    /// Add water for a specific date
+    func addWater(_ amount: Double, on date: Date) async {
+        let dayStart = Calendar.current.startOfDay(for: date)
         let entry = WaterEntry(amount: amount)
         
-        if let index = waterLogs.firstIndex(where: { $0.date == today }) {
+        if let index = waterLogs.firstIndex(where: { $0.date == dayStart }) {
             waterLogs[index].entries.append(entry)
         } else {
-            var newLog = WaterLog(date: Date(), targetOunces: dailyTarget)
+            var newLog = WaterLog(date: date, targetOunces: dailyTarget)
             newLog.entries.append(entry)
             waterLogs.append(newLog)
         }
@@ -115,6 +120,16 @@ class WaterService: ObservableObject {
     
     func totalOunces(for date: Date) -> Double {
         waterLog(for: date)?.totalOunces ?? 0
+    }
+    
+    /// Progress for a specific date (0.0 to 1.0)
+    func progress(for date: Date) -> Double {
+        waterLog(for: date)?.progress ?? 0
+    }
+    
+    /// Check if water goal is complete for a specific date
+    func isComplete(for date: Date) -> Bool {
+        waterLog(for: date)?.isComplete ?? false
     }
     
     func weeklyAverage() -> Double {

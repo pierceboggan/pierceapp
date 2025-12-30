@@ -47,19 +47,25 @@ struct CleaningTask: Codable, Identifiable {
     
     var nextDueDate: Date? {
         guard let lastCompleted = lastCompletedDate else {
-            return createdAt // Due immediately if never completed
+            // Never completed - due today (start of day)
+            return Calendar.current.startOfDay(for: Date())
         }
         return recurrence.nextDate(from: lastCompleted)
     }
     
     var isOverdue: Bool {
-        guard let dueDate = nextDueDate else { return true }
-        return dueDate < Date()
+        guard let dueDate = nextDueDate else { return false }
+        // Only overdue if the due date is before the start of today
+        let todayStart = Calendar.current.startOfDay(for: Date())
+        return dueDate < todayStart
     }
     
     var isDueToday: Bool {
         guard let dueDate = nextDueDate else { return true }
-        return Calendar.current.isDateInToday(dueDate) || isOverdue
+        let todayStart = Calendar.current.startOfDay(for: Date())
+        let tomorrowStart = Calendar.current.date(byAdding: .day, value: 1, to: todayStart)!
+        // Due today if the due date falls within today OR is overdue
+        return (dueDate >= todayStart && dueDate < tomorrowStart) || isOverdue
     }
     
     var isSnoozed: Bool {

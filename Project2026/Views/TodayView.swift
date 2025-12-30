@@ -15,6 +15,7 @@ struct TodayView: View {
     @EnvironmentObject var readingService: ReadingService
     @EnvironmentObject var daySummaryService: DaySummaryService
     
+    @State private var selectedDate: Date = Date()
     @State private var showingAddWater = false
     @State private var showingLogReading = false
     @State private var showingReflection = false
@@ -22,19 +23,32 @@ struct TodayView: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    /// Whether the selected date is today.
+    private var isToday: Bool {
+        Calendar.current.isDateInToday(selectedDate)
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Days Left in 2026 Countdown
-                    DaysLeftCountdownCard()
+                    // Date Navigation
+                    DateNavigationBar(
+                        selectedDate: $selectedDate,
+                        isToday: isToday
+                    )
+                    
+                    // Days Left in 2026 Countdown (only show on today)
+                    if isToday {
+                        DaysLeftCountdownCard()
+                    }
                     
                     // Score Card
                     DailyScoreCard(score: calculateScore())
                     
                     // Water Tracker
                     WaterTrackerCard(
-                        current: waterService.todayTotal,
+                        current: waterService.totalOunces(for: selectedDate),
                         target: waterService.dailyTarget,
                         onAddWater: { showingAddWater = true }
                     )
@@ -43,7 +57,7 @@ struct TodayView: View {
                     if let book = readingService.primaryBook {
                         ReadingProgressCard(
                             book: book,
-                            pagesReadToday: readingService.pagesReadToday(),
+                            pagesReadToday: readingService.pagesRead(on: selectedDate),
                             onLogReading: { showingLogReading = true }
                         )
                     } else {
@@ -51,13 +65,17 @@ struct TodayView: View {
                     }
                     
                     // Today's Habits
-                    TodayHabitsCard()
+                    TodayHabitsCard(selectedDate: selectedDate)
                     
-                    // Today's Cleaning
-                    TodayCleaningCard()
+                    // Today's Cleaning (only show for today)
+                    if isToday {
+                        TodayCleaningCard()
+                    }
                     
-                    // Mobility Routine
-                    MobilityRoutineCard(onTap: { showingMobilityRoutine = true })
+                    // Mobility Routine (only show for today)
+                    if isToday {
+                        MobilityRoutineCard(onTap: { showingMobilityRoutine = true })
+                    }
                     
                     // Reflection
                     ReflectionCard(onTap: { showingReflection = true })
@@ -65,19 +83,23 @@ struct TodayView: View {
                 .padding()
             }
             .background(theme.background)
-            .navigationTitle("Today")
+            .navigationTitle(isToday ? "Today" : "Log Day")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Text(formattedDate)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    if !isToday {
+                        Button("Today") {
+                            withAnimation {
+                                selectedDate = Date()
+                            }
+                        }
+                    }
                 }
             }
             .sheet(isPresented: $showingAddWater) {
-                AddWaterSheet()
+                AddWaterSheet(selectedDate: selectedDate)
             }
             .sheet(isPresented: $showingLogReading) {
-                LogReadingSheet()
+                LogReadingSheet(selectedDate: selectedDate)
             }
             .sheet(isPresented: $showingReflection) {
                 ReflectionSheet()
@@ -94,14 +116,14 @@ struct TodayView: View {
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d"
-        return formatter.string(from: Date())
+        return formatter.string(from: selectedDate)
     }
     
     private func calculateScore() -> Double {
-        let habitCompletion = habitService.completionRate(for: Date())
-        let cleaningCompletion = cleaningService.completionRate(for: Date())
-        let waterCompletion = waterService.todayProgress
-        let didRead = readingService.didReadToday()
+        let habitCompletion = habitService.completionRate(for: selectedDate)
+        let cleaningCompletion = cleaningService.completionRate(for: selectedDate)
+        let waterCompletion = waterService.progress(for: selectedDate)
+        let didRead = readingService.didRead(on: selectedDate)
         
         return DaySummary.calculateScore(
             habitCompletion: habitCompletion,
@@ -113,12 +135,106 @@ struct TodayView: View {
     
     private func updateDaySummary() async {
         await daySummaryService.updateSummary(
-            for: Date(),
+            for: selectedDate,
             habitService: habitService,
             cleaningService: cleaningService,
             waterService: waterService,
             readingService: readingService
         )
+    }
+}
+
+// MARK: - Date Navigation Bar
+
+/// Horizontal bar with prev/next arrows and current date display.
+struct DateNavigationBar: View {
+    @Binding var selectedDate: Date
+    let isToday: Bool
+    
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    /// Maximum days in the past user can navigate.
+    private let maxDaysBack = 30
+    
+    /// Whether the user can go back further.
+    private var canGoBack: Bool {
+        let daysAgo = Calendar.current.dateComponents([.day], from: selectedDate, to: Date()).day ?? 0
+        return daysAgo < maxDaysBack
+    }
+    
+    /// Whether the user can go forward.
+    private var canGoForward: Bool {
+        !isToday
+    }
+    
+    var body: some View {
+        HStack {
+            // Previous Day
+            Button {
+                withAnimation {
+                    if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) {
+                        selectedDate = newDate
+                    }
+                }
+            } label: {
+                Image(systemName: "chevron.left.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(canGoBack ? theme.primary : .secondary.opacity(0.3))
+            }
+            .disabled(!canGoBack)
+            
+            Spacer()
+            
+            // Date Display
+            VStack(spacing: 2) {
+                Text(dayLabel)
+                    .font(.headline)
+                    .foregroundColor(isToday ? theme.primary : .primary)
+                
+                Text(formattedDate)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            // Next Day
+            Button {
+                withAnimation {
+                    if let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) {
+                        selectedDate = newDate
+                    }
+                }
+            } label: {
+                Image(systemName: "chevron.right.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(canGoForward ? theme.primary : .secondary.opacity(0.3))
+            }
+            .disabled(!canGoForward)
+        }
+        .padding()
+        .background(theme.card)
+        .cornerRadius(12)
+    }
+    
+    private var dayLabel: String {
+        if isToday {
+            return "Today"
+        } else if Calendar.current.isDateInYesterday(selectedDate) {
+            return "Yesterday"
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE"
+            return formatter.string(from: selectedDate)
+        }
+    }
+    
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, yyyy"
+        return formatter.string(from: selectedDate)
     }
 }
 
@@ -578,11 +694,14 @@ struct AddBookPromptCard: View {
 // MARK: - Today Habits Card
 
 struct TodayHabitsCard: View {
+    var selectedDate: Date = Date()
+    
     @EnvironmentObject var themeService: ThemeService
     @EnvironmentObject var habitService: HabitService
     
     private var theme: AppTheme { themeService.currentTheme }
-    private var todayHabits: [HabitTemplate] { habitService.habitsForToday() }
+    private var habitsForDate: [HabitTemplate] { habitService.habitsFor(date: selectedDate) }
+    private var isToday: Bool { Calendar.current.isDateInToday(selectedDate) }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -593,20 +712,20 @@ struct TodayHabitsCard: View {
                 
                 Spacer()
                 
-                Text("\(completedCount)/\(todayHabits.count)")
+                Text("\(completedCount)/\(habitsForDate.count)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
             
-            if todayHabits.isEmpty {
-                Text("No habits for today")
+            if habitsForDate.isEmpty {
+                Text("No habits for \(isToday ? "today" : "this day")")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .padding(.vertical)
             } else {
                 // Group by category
                 ForEach(HabitCategory.allCases, id: \.self) { category in
-                    let categoryHabits = todayHabits.filter { $0.category == category }
+                    let categoryHabits = habitsForDate.filter { $0.category == category }
                     if !categoryHabits.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(category.rawValue)
@@ -615,7 +734,7 @@ struct TodayHabitsCard: View {
                                 .foregroundColor(.secondary)
                             
                             ForEach(categoryHabits) { habit in
-                                HabitRowView(habit: habit)
+                                HabitRowView(habit: habit, selectedDate: selectedDate)
                             }
                         }
                     }
@@ -629,8 +748,8 @@ struct TodayHabitsCard: View {
     }
     
     private var completedCount: Int {
-        todayHabits.filter { habit in
-            habitService.logForHabit(habit.id, on: Date())?.completed ?? false
+        habitsForDate.filter { habit in
+            habitService.logForHabit(habit.id, on: selectedDate)?.completed ?? false
         }.count
     }
 }
@@ -639,19 +758,20 @@ struct TodayHabitsCard: View {
 
 struct HabitRowView: View {
     let habit: HabitTemplate
+    var selectedDate: Date = Date()
     
     @EnvironmentObject var habitService: HabitService
     @EnvironmentObject var themeService: ThemeService
     
     private var theme: AppTheme { themeService.currentTheme }
-    private var log: HabitLog? { habitService.logForHabit(habit.id, on: Date()) }
+    private var log: HabitLog? { habitService.logForHabit(habit.id, on: selectedDate) }
     private var isCompleted: Bool { log?.completed ?? false }
     
     var body: some View {
         HStack {
             Button {
                 Task {
-                    await habitService.toggleHabitCompletion(habit)
+                    await habitService.toggleHabitCompletion(habit, on: selectedDate)
                 }
             } label: {
                 Image(systemName: isCompleted ? "checkmark.circle.fill" : "circle")

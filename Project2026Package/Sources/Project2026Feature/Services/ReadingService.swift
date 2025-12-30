@@ -105,7 +105,8 @@ public class ReadingService: ObservableObject {
     
     // MARK: - Reading Sessions
     
-    public func logReading(book: Book, pagesRead: Int, durationMinutes: Int? = nil, note: String? = nil) async {
+    /// Log reading for a specific date (defaults to today).
+    public func logReading(book: Book, pagesRead: Int, durationMinutes: Int? = nil, note: String? = nil, on date: Date = Date()) async {
         guard let index = books.firstIndex(where: { $0.id == book.id }) else { return }
         
         let startPage = books[index].currentPage
@@ -113,6 +114,7 @@ public class ReadingService: ObservableObject {
         
         let session = ReadingSession(
             bookId: book.id,
+            date: date,
             pagesRead: pagesRead,
             durationMinutes: durationMinutes,
             note: note,
@@ -128,7 +130,7 @@ public class ReadingService: ObservableObject {
         // Auto-finish if complete
         if books[index].isComplete {
             books[index].status = .finished
-            books[index].finishDate = Date()
+            books[index].finishDate = date
         }
         
         await saveBooks()
@@ -164,16 +166,31 @@ public class ReadingService: ObservableObject {
     // MARK: - Statistics
     
     public func sessionsForToday() -> [ReadingSession] {
-        let today = Calendar.current.startOfDay(for: Date())
-        return readingSessions.filter { $0.date == today }
+        sessionsFor(date: Date())
+    }
+    
+    /// Returns reading sessions for a specific date
+    public func sessionsFor(date: Date) -> [ReadingSession] {
+        let dayStart = Calendar.current.startOfDay(for: date)
+        return readingSessions.filter { $0.date == dayStart }
     }
     
     public func pagesReadToday() -> Int {
         sessionsForToday().reduce(0) { $0 + $1.pagesRead }
     }
     
+    /// Pages read on a specific date
+    public func pagesRead(on date: Date) -> Int {
+        sessionsFor(date: date).reduce(0) { $0 + $1.pagesRead }
+    }
+    
     public func didReadToday() -> Bool {
         !sessionsForToday().isEmpty
+    }
+    
+    /// Check if user read on a specific date
+    public func didRead(on date: Date) -> Bool {
+        !sessionsFor(date: date).isEmpty
     }
     
     public func sessionsForBook(_ bookId: UUID) -> [ReadingSession] {

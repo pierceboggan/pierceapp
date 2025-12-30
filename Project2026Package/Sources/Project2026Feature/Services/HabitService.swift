@@ -104,6 +104,11 @@ public class HabitService: ObservableObject {
         return activeHabits.filter { $0.frequency.isActiveOn(date: today) }
     }
     
+    /// Returns habits that are active on the given date
+    public func habitsFor(date: Date) -> [HabitTemplate] {
+        return activeHabits.filter { $0.frequency.isActiveOn(date: date) }
+    }
+    
     public func logForHabit(_ habitId: UUID, on date: Date) -> HabitLog? {
         let dayStart = Calendar.current.startOfDay(for: date)
         return habitLogs.first { $0.habitId == habitId && $0.date == dayStart }

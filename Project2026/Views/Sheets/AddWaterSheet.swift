@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct AddWaterSheet: View {
+    /// The date to log water for (defaults to today).
+    var selectedDate: Date = Date()
+    
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var waterService: WaterService
     @EnvironmentObject var themeService: ThemeService
@@ -17,16 +20,49 @@ struct AddWaterSheet: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    /// Check if the selected date is today.
+    private var isToday: Bool {
+        Calendar.current.isDateInToday(selectedDate)
+    }
+    
+    /// Current water total for the selected date.
+    private var currentTotal: Double {
+        waterService.totalOunces(for: selectedDate)
+    }
+    
+    /// Current progress for the selected date.
+    private var currentProgress: Double {
+        waterService.progress(for: selectedDate)
+    }
+    
+    /// Get water log for the selected date.
+    private var waterLogForDate: WaterLog? {
+        waterService.waterLog(for: selectedDate)
+    }
+    
+    /// Formatted date string for display.
+    private var dateLabel: String {
+        if isToday {
+            return "Today's Progress"
+        } else if Calendar.current.isDateInYesterday(selectedDate) {
+            return "Yesterday's Progress"
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE, MMM d"
+            return formatter.string(from: selectedDate)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
                 // Current Progress
                 VStack(spacing: 8) {
-                    Text("Today's Progress")
+                    Text(dateLabel)
                         .font(.headline)
                         .foregroundColor(.secondary)
                     
-                    Text("\(Int(waterService.todayTotal))oz")
+                    Text("\(Int(currentTotal))oz")
                         .font(.system(size: 48, weight: .bold, design: .rounded))
                         .foregroundColor(.blue)
                     
@@ -34,7 +70,7 @@ struct AddWaterSheet: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
-                    ProgressView(value: waterService.todayProgress)
+                    ProgressView(value: currentProgress)
                         .tint(.blue)
                         .padding(.horizontal, 40)
                 }
@@ -100,9 +136,9 @@ struct AddWaterSheet: View {
                 Button {
                     Task {
                         if let preset = selectedPreset {
-                            await waterService.addWater(quickAdd: preset)
+                            await waterService.addWater(preset.ounces, on: selectedDate)
                         } else if let amount = Double(customAmount), amount > 0 {
-                            await waterService.addWater(amount)
+                            await waterService.addWater(amount, on: selectedDate)
                         }
                         dismiss()
                     }
@@ -118,8 +154,8 @@ struct AddWaterSheet: View {
                 .disabled(!isValid)
                 .padding(.horizontal)
                 
-                // Undo Last Entry
-                if !waterService.todayLog.entries.isEmpty {
+                // Undo Last Entry (only show for today)
+                if isToday, !waterService.todayLog.entries.isEmpty {
                     Button {
                         Task {
                             await waterService.removeLastEntry()
