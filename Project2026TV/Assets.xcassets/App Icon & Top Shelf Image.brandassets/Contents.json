@@ -1,34 +1,23 @@
 {
   "assets" : [
     {
-      "filename" : "Back.imagestacklayer",
+      "filename" : "App Icon.imagestack",
       "idiom" : "tv",
-      "role" : "background"
+      "role" : "primary-app-icon"
     },
     {
-      "filename" : "Middle.imagestacklayer",
+      "filename" : "Top Shelf Image Wide.imageset",
       "idiom" : "tv",
-      "role" : "background"
+      "role" : "top-shelf-image-wide"
     },
     {
-      "filename" : "Front.imagestacklayer",
+      "filename" : "Top Shelf Image.imageset",
       "idiom" : "tv",
-      "role" : "foreground"
+      "role" : "top-shelf-image"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "layers" : [
-    {
-      "filename" : "Front.imagestacklayer"
-    },
-    {
-      "filename" : "Middle.imagestacklayer"
-    },
-    {
-      "filename" : "Back.imagestacklayer"
-    }
-  ]
+  }
 }
