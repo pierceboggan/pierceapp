@@ -621,6 +621,10 @@ public struct MobilityRoutineCard: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
+    public init(onTap: @escaping () -> Void) {
+        self.onTap = onTap
+    }
+    
     public var body: some View {
         Button(action: onTap) {
             HStack {
