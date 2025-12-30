@@ -26,6 +26,9 @@ struct TodayView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
+                    // Days Left in 2026 Countdown
+                    DaysLeftCountdownCard()
+                    
                     // Score Card
                     DailyScoreCard(score: calculateScore())
                     
@@ -116,6 +119,152 @@ struct TodayView: View {
             waterService: waterService,
             readingService: readingService
         )
+    }
+}
+
+// MARK: - Daily Score Card
+
+/// Displays the number of days remaining in 2026 as a countdown timer.
+struct DaysLeftCountdownCard: View {
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    /// Calculates the number of days remaining in 2026.
+    private var daysLeftIn2026: Int {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // End of 2026 (December 31, 2026 at 23:59:59)
+        var components = DateComponents()
+        components.year = 2026
+        components.month = 12
+        components.day = 31
+        components.hour = 23
+        components.minute = 59
+        components.second = 59
+        
+        guard let endOf2026 = calendar.date(from: components) else {
+            return 0
+        }
+        
+        // If we're past 2026, return 0
+        if now > endOf2026 {
+            return 0
+        }
+        
+        // If we're before 2026, calculate days from start of 2026
+        var startComponents = DateComponents()
+        startComponents.year = 2026
+        startComponents.month = 1
+        startComponents.day = 1
+        
+        guard let startOf2026 = calendar.date(from: startComponents) else {
+            return 0
+        }
+        
+        // If we're before 2026, show full year
+        if now < startOf2026 {
+            return 365
+        }
+        
+        // Calculate days remaining from today until end of 2026
+        let daysRemaining = calendar.dateComponents([.day], from: now, to: endOf2026).day ?? 0
+        return max(0, daysRemaining + 1) // +1 to include today
+    }
+    
+    /// Progress through the year (0.0 to 1.0).
+    private var yearProgress: Double {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        var startComponents = DateComponents()
+        startComponents.year = 2026
+        startComponents.month = 1
+        startComponents.day = 1
+        
+        var endComponents = DateComponents()
+        endComponents.year = 2026
+        endComponents.month = 12
+        endComponents.day = 31
+        
+        guard let startOf2026 = calendar.date(from: startComponents),
+              let endOf2026 = calendar.date(from: endComponents) else {
+            return 0
+        }
+        
+        if now < startOf2026 { return 0 }
+        if now > endOf2026 { return 1.0 }
+        
+        let totalDays = calendar.dateComponents([.day], from: startOf2026, to: endOf2026).day ?? 365
+        let daysPassed = calendar.dateComponents([.day], from: startOf2026, to: now).day ?? 0
+        
+        return Double(daysPassed) / Double(totalDays)
+    }
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "calendar")
+                    .font(.title2)
+                    .foregroundColor(theme.primary)
+                
+                Text("Days Left in 2026")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
+            
+            Text("\(daysLeftIn2026)")
+                .font(.system(size: 48, weight: .bold, design: .rounded))
+                .foregroundColor(theme.primary)
+            
+            // Progress bar showing year completion
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(theme.primary.opacity(0.2))
+                        .frame(height: 10)
+                    
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(theme.primary)
+                        .frame(width: geometry.size.width * yearProgress, height: 10)
+                        .animation(.easeInOut, value: yearProgress)
+                }
+            }
+            .frame(height: 10)
+            
+            Text(motivationalMessage)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(theme.card)
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+    }
+    
+    /// Returns a motivational message based on remaining days.
+    private var motivationalMessage: String {
+        switch daysLeftIn2026 {
+        case 0:
+            return "2026 is complete! 🎉"
+        case 1...7:
+            return "Final stretch! Make every day count! 🏁"
+        case 8...30:
+            return "Less than a month left! Stay focused! 💪"
+        case 31...90:
+            return "Keep the momentum going! 🚀"
+        case 91...180:
+            return "Halfway there! You've got this! ⭐"
+        case 181...270:
+            return "Building great habits! 📈"
+        case 271...365:
+            return "A new year of possibilities! 🌟"
+        default:
+            return "Make 2026 your best year! ✨"
+        }
     }
 }
 
