@@ -31,13 +31,124 @@
 - Keep videos concise but complete (15-60 seconds typically)
 - For timer-based features, show start/pause/complete flows
 
-### Workflow:
+### Complete Step-by-Step Video Recording Workflow:
+
+#### Step 1: Set Up MCP Session Defaults (Required First!)
+Before any simulator automation, configure session defaults to avoid passing IDs repeatedly:
+```javascript
+mcp_xcodebuildmcp_session_set_defaults({
+    scheme: "Project2026",
+    simulatorId: "SIMULATOR_UUID",  // Get from list_sims or mcp_xcodebuildmcp_list_sims
+    workspacePath: "/Users/pierce/Documents/GitHub/pierceapp/Project2026.xcworkspace"
+})
 ```
-1. Build and run app on simulator
-2. Start video recording
-3. Navigate to and demonstrate the new feature
-4. Stop recording and save with descriptive filename
-5. Commit video along with code changes
+
+#### Step 2: Build and Launch App
+```javascript
+// Build and run in simulator
+mcp_xcodebuildmcp_build_run_sim()  // Uses session defaults
+```
+
+#### Step 3: Take Initial Screenshot to Verify State
+```javascript
+mcp_xcodebuildmcp_screenshot()  // Returns image showing current screen
+```
+
+#### Step 4: Start Video Recording
+```javascript
+mcp_xcodebuildmcp_record_sim_video({
+    start: true,
+    fps: 30  // Optional, default is 30
+})
+// Returns session ID like "49FC08B5-B194-49B8-8898-ABFECBC2E48F:1767057630003"
+```
+
+#### Step 5: Navigate and Interact with UI
+Use these tools to demonstrate the feature:
+
+```javascript
+// Tap by accessibility label (preferred)
+mcp_xcodebuildmcp_tap({
+    label: "Fitness",  // Accessibility label
+    postDelay: 0.5     // Wait after tap for animations
+})
+
+// Tap by coordinates (when labels unavailable)
+mcp_xcodebuildmcp_tap({
+    x: 110,
+    y: 810,
+    postDelay: 0.5
+})
+
+// Get UI hierarchy to find element positions
+mcp_xcodebuildmcp_describe_ui()  // Returns JSON with all element frames
+
+// Type text (after tapping a text field)
+mcp_xcodebuildmcp_type_text({
+    text: "Hello World"
+})
+
+// Scroll/swipe gestures
+mcp_xcodebuildmcp_gesture({
+    preset: "scroll-down"  // or scroll-up, swipe-from-left-edge, etc.
+})
+
+// Press hardware buttons
+mcp_xcodebuildmcp_button({
+    buttonType: "home"  // or lock, siri, apple-pay
+})
+```
+
+#### Step 6: Stop Recording and Save
+```javascript
+mcp_xcodebuildmcp_record_sim_video({
+    stop: true,
+    outputFile: "/Users/pierce/Documents/GitHub/pierceapp/Docs/Videos/feature-name-demo.mp4"
+})
+```
+
+### Tips for High-Quality Demo Videos:
+- **Use postDelay**: Add 0.5-1.0 second delays after taps for smoother videos
+- **Take screenshots**: Verify screen state before/after interactions
+- **Label-based taps**: Prefer `label` parameter over coordinates when possible
+- **Describe UI first**: Call `describe_ui()` to get accurate coordinates
+- **Multiple videos**: Record separate videos for complex features (e.g., one for overview, one for detailed flow)
+
+### Example: Recording a Complete Feature Demo
+
+```javascript
+// 1. Set defaults
+mcp_xcodebuildmcp_session_set_defaults({...})
+
+// 2. Build and run
+mcp_xcodebuildmcp_build_run_sim()
+
+// 3. Verify app launched
+mcp_xcodebuildmcp_screenshot()
+
+// 4. Start recording
+mcp_xcodebuildmcp_record_sim_video({ start: true })
+
+// 5. Navigate to feature tab
+mcp_xcodebuildmcp_tap({ label: "Fitness", postDelay: 0.8 })
+
+// 6. Open a sheet/modal
+mcp_xcodebuildmcp_tap({ label: "Log Workout", postDelay: 0.5 })
+
+// 7. Interact with form
+mcp_xcodebuildmcp_tap({ label: "Duration", postDelay: 0.3 })
+mcp_xcodebuildmcp_type_text({ text: "45" })
+
+// 8. Submit form
+mcp_xcodebuildmcp_tap({ label: "Save", postDelay: 0.5 })
+
+// 9. Stop and save video
+mcp_xcodebuildmcp_record_sim_video({
+    stop: true,
+    outputFile: "/Users/pierce/Documents/GitHub/pierceapp/Docs/Videos/log-workout-demo.mp4"
+})
 ```
 
 **FAILURE TO CREATE DEMO VIDEOS IS A BLOCKING ISSUE.** Do not consider a feature complete without its demo video.
+
+For complete XcodeBuildMCP tool reference, see [xcodebuildmcp-tools.instructions.md](.github/instructions/xcodebuildmcp-tools.instructions.md).

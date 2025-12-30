@@ -38,6 +38,13 @@ Based on [prd.md](prd.md), the following items are not yet implemented.
 
 ## Low Priority / Future
 
+### TrainerRoad Integration (Optional)
+TrainerRoad supports calendar export (ICS feed) to iCloud/Google Calendar. However, this is **one-way sync of planned workouts only** - completed workout data is not exported. For now, use the "Open TrainerRoad" button in the Fitness tab to view scheduled workouts, then manually log completed workouts.
+
+- [ ] Set up TrainerRoad calendar sync with iCloud for viewing scheduled workouts
+- [ ] Consider EventKit integration to read planned workouts from calendar
+- [ ] Authenticate with TrainerRoad API (requires OAuth) for completed workout data
+
 ### Supabase Sync (Optional)
 - [ ] Set up Supabase project
 - [ ] Create tables: profiles, habits, habit_logs, cleaning_tasks, cleaning_logs, water_logs, books, reading_sessions, day_summaries
@@ -76,6 +83,12 @@ Based on [prd.md](prd.md), the following items are not yet implemented.
 - [x] PersistenceManager with App Group support
 - [x] Unit tests for recurrence, compliance, scoring, water, reading logic
 - [x] Documentation comments on all structs/classes
+- [x] Dedicated Fitness tab with Workouts and Mobility tracking
+- [x] Workout logging with type, duration, intensity, and cycling metrics (TSS)
+- [x] Mobility routine completion tracking and history
+- [x] Weekly workout/mobility goal progress (6x/week targets)
+- [x] Deep link to open TrainerRoad app from Fitness tab
+- [x] Deep link to open Audible app from Reading card
 
 ---
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Main fitness tab combining workout tracking and mobility routines.
-public struct FitnessView: View {
+struct FitnessView: View {
     @EnvironmentObject var themeService: ThemeService
     @EnvironmentObject var workoutService: WorkoutService
     
@@ -18,7 +18,7 @@ public struct FitnessView: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
@@ -85,19 +85,19 @@ public struct FitnessView: View {
         }
     }
     
-    public init() {}
+    init() {}
 }
 
-// MARK: - Fitness Weekly Summary Card
+// MARK: - Weekly Summary Card
 
-public struct FitnessWeeklySummaryCard: View {
+struct FitnessWeeklySummaryCard: View {
     @EnvironmentObject var themeService: ThemeService
     @EnvironmentObject var workoutService: WorkoutService
     
     private var theme: AppTheme { themeService.currentTheme }
     private var summary: WeeklyWorkoutSummary { workoutService.weeklySummary() }
     
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             HStack {
                 Text("This Week")
@@ -159,6 +159,19 @@ public struct FitnessWeeklySummaryCard: View {
                     target: 6,
                     color: .purple
                 )
+            }
+            
+            // External app link
+            Divider()
+            
+            HStack {
+                Text("View scheduled workouts")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                
+                OpenAppButton(appLink: .trainerRoad, style: .compact)
             }
         }
         .padding()
@@ -250,6 +263,95 @@ struct ProgressRow: View {
                 }
             }
             .frame(height: 8)
+        }
+    }
+}
+
+// MARK: - External App Links
+
+/// URL schemes for external fitness apps.
+enum FitnessAppLink {
+    case trainerRoad
+    case strava
+    
+    var urlScheme: String {
+        switch self {
+        case .trainerRoad: return "trainerroad://"
+        case .strava: return "strava://"
+        }
+    }
+    
+    var appStoreURL: URL {
+        switch self {
+        case .trainerRoad: return URL(string: "https://apps.apple.com/app/trainerroad/id622011147")!
+        case .strava: return URL(string: "https://apps.apple.com/app/strava/id426826309")!
+        }
+    }
+    
+    var displayName: String {
+        switch self {
+        case .trainerRoad: return "TrainerRoad"
+        case .strava: return "Strava"
+        }
+    }
+}
+
+// MARK: - Open App Button
+
+/// Button that opens an external app or falls back to App Store.
+struct OpenAppButton: View {
+    let appLink: FitnessAppLink
+    let style: ButtonStyle
+    
+    @Environment(\.openURL) private var openURL
+    @EnvironmentObject var themeService: ThemeService
+    
+    private var theme: AppTheme { themeService.currentTheme }
+    
+    enum ButtonStyle {
+        case compact
+        case full
+    }
+    
+    var body: some View {
+        Button {
+            openApp()
+        } label: {
+            switch style {
+            case .compact:
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.up.right.square")
+                    Text(appLink.displayName)
+                }
+                .font(.caption)
+                .fontWeight(.medium)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.blue.opacity(0.1))
+                .foregroundColor(.blue)
+                .cornerRadius(6)
+                
+            case .full:
+                Label("Open \(appLink.displayName)", systemImage: "arrow.up.right.square")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.blue.opacity(0.1))
+                    .foregroundColor(.blue)
+                    .cornerRadius(8)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+    
+    private func openApp() {
+        if let url = URL(string: appLink.urlScheme),
+           UIApplication.shared.canOpenURL(url) {
+            openURL(url)
+        } else {
+            // App not installed, open App Store
+            openURL(appLink.appStoreURL)
         }
     }
 }
@@ -629,7 +731,7 @@ struct MobilityLogRow: View {
 
 // MARK: - Add Workout Sheet
 
-public struct AddWorkoutSheet: View {
+struct AddWorkoutSheet: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var workoutService: WorkoutService
     @EnvironmentObject var themeService: ThemeService
@@ -644,7 +746,7 @@ public struct AddWorkoutSheet: View {
     
     private var theme: AppTheme { themeService.currentTheme }
     
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             Form {
                 Section("Workout Type") {

@@ -14,6 +14,7 @@ public struct TodayView: View {
     @EnvironmentObject var waterService: WaterService
     @EnvironmentObject var readingService: ReadingService
     @EnvironmentObject var daySummaryService: DaySummaryService
+    @EnvironmentObject var workoutService: WorkoutService
     
     @State private var showingAddWater = false
     @State private var showingLogReading = false
@@ -642,6 +643,7 @@ public struct MobilityRoutineCard: View {
     let onTap: () -> Void
     
     @EnvironmentObject var themeService: ThemeService
+    @EnvironmentObject var workoutService: WorkoutService
     
     private var theme: AppTheme { themeService.currentTheme }
     
@@ -653,9 +655,16 @@ public struct MobilityRoutineCard: View {
         Button(action: onTap) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Label("Bike Mobility Routine", systemImage: "figure.strengthtraining.traditional")
-                        .font(.headline)
-                        .foregroundColor(.blue)
+                    HStack {
+                        Label("Bike Mobility Routine", systemImage: "figure.strengthtraining.traditional")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                        
+                        if workoutService.didMobilityToday() {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(theme.positive)
+                        }
+                    }
                     
                     Text("10 exercises • ~12 minutes")
                         .font(.caption)
@@ -731,4 +740,5 @@ public struct ReflectionCard: View {
         .environmentObject(WaterService())
         .environmentObject(ReadingService())
         .environmentObject(DaySummaryService())
+        .environmentObject(WorkoutService())
 }

@@ -132,10 +132,16 @@ public struct DaySummary: Codable, Identifiable, Sendable {
 /// Aggregates DaySummary records for a 7-day period.
 /// Calculates average score, habit compliance rate, total water intake,
 /// reading days, and pages read for the week.
-public struct WeeklySummary {
-    let startDate: Date
-    let endDate: Date
-    let days: [DaySummary]
+public struct WeeklySummary: Sendable {
+    public let startDate: Date
+    public let endDate: Date
+    public let days: [DaySummary]
+    
+    public init(startDate: Date, endDate: Date, days: [DaySummary]) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.days = days
+    }
     
     public var averageScore: Double {
         guard !days.isEmpty else { return 0 }

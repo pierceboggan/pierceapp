@@ -17,6 +17,11 @@ struct ContentView: View {
                     Label("Today", systemImage: "sun.max.fill")
                 }
             
+            FitnessView()
+                .tabItem {
+                    Label("Fitness", systemImage: "figure.run")
+                }
+            
             HabitsView()
                 .tabItem {
                     Label("Habits", systemImage: "checkmark.circle.fill")
@@ -49,4 +54,5 @@ struct ContentView: View {
         .environmentObject(WaterService())
         .environmentObject(ReadingService())
         .environmentObject(DaySummaryService())
+        .environmentObject(WorkoutService())
 }

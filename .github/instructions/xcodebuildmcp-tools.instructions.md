@@ -122,19 +122,28 @@ launch_app_device({
 ## UI Automation
 
 ```javascript
-// Get UI hierarchy
+// Get UI hierarchy with precise frame coordinates
 describe_ui({
     simulatorUuid: "SIMULATOR_UUID"
 })
+// Returns JSON tree with frame data (x, y, width, height) for all visible elements
+// ALWAYS call this before UI interactions to get accurate coordinates
 
-// Tap element
+// Tap element by accessibility label (preferred method)
+tap({
+    label: "Button Label",  // Accessibility label
+    postDelay: 0.5          // Wait after tap for animations
+})
+
+// Tap element by coordinates (when labels unavailable)
 tap({
     simulatorUuid: "SIMULATOR_UUID",
     x: 100,
-    y: 200
+    y: 200,
+    postDelay: 0.5
 })
 
-// Type text
+// Type text (after focusing a text field)
 type_text({
     simulatorUuid: "SIMULATOR_UUID",
     text: "Hello World"
@@ -144,7 +153,148 @@ type_text({
 screenshot({
     simulatorUuid: "SIMULATOR_UUID"
 })
+
+// Swipe gesture
+swipe({
+    x1: 200, y1: 600,  // Start point
+    x2: 200, y2: 200,  // End point
+    duration: 0.3      // Seconds
+})
+
+// Long press
+long_press({
+    x: 200,
+    y: 400,
+    duration: 1000  // Milliseconds
+})
+
+// Preset gestures (scroll, swipe from edges)
+gesture({
+    preset: "scroll-down"  // scroll-up, scroll-left, scroll-right,
+                           // swipe-from-left-edge, swipe-from-right-edge,
+                           // swipe-from-top-edge, swipe-from-bottom-edge
+})
+
+// Press hardware buttons
+button({
+    buttonType: "home"  // apple-pay, home, lock, side-button, siri
+})
 ```
+
+## Video Recording (CRITICAL FOR FEATURE DEMOS)
+
+Video recording is **mandatory** for all new features. See the main [copilot-instructions.md](../copilot-instructions.md) for requirements.
+
+### Session Setup (Required First!)
+Before any video recording or UI automation, set session defaults:
+
+```javascript
+// ALWAYS run this first in a new session
+mcp_xcodebuildmcp_session_set_defaults({
+    scheme: "Project2026",
+    simulatorId: "49FC08B5-B194-49B8-8898-ABFECBC2E48F",  // From list_sims
+    workspacePath: "/Users/pierce/Documents/GitHub/pierceapp/Project2026.xcworkspace"
+})
+```
+
+### Finding Simulator UUID
+```javascript
+// List all available simulators
+mcp_xcodebuildmcp_list_sims()
+// Returns list with names and UUIDs like:
+// - iPhone 16 (49FC08B5-B194-49B8-8898-ABFECBC2E48F) - iOS 18.4
+
+// Or for physical devices
+mcp_xcodebuildmcp_list_devices()
+```
+
+### Recording Workflow
+
+```javascript
+// 1. Start recording
+mcp_xcodebuildmcp_record_sim_video({
+    start: true,
+    fps: 30  // Optional, default 30, max 120
+})
+// Returns session ID: "SIMULATOR_UUID:TIMESTAMP"
+
+// 2. Perform UI interactions (see UI Automation section)
+mcp_xcodebuildmcp_tap({ label: "Tab Name", postDelay: 0.8 })
+mcp_xcodebuildmcp_tap({ label: "Button", postDelay: 0.5 })
+
+// 3. Stop and save recording
+mcp_xcodebuildmcp_record_sim_video({
+    stop: true,
+    outputFile: "/Users/pierce/Documents/GitHub/pierceapp/Docs/Videos/feature-demo.mp4"
+})
+```
+
+### Video Recording Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `start` | boolean | Set `true` to begin recording |
+| `stop` | boolean | Set `true` to end recording |
+| `fps` | integer | Frames per second (1-120, default 30) |
+| `outputFile` | string | Absolute path to save the MP4 file |
+
+### Video File Naming Convention
+Save all videos to: `/Users/pierce/Documents/GitHub/pierceapp/Docs/Videos/`
+
+Naming patterns:
+- `feature-name-demo.mp4` - Main feature demonstration
+- `feature-name-detailed-flow.mp4` - Detailed walkthrough
+- `feature-name-edge-case.mp4` - Specific edge case demo
+
+### Complete Example: Recording Fitness Tab Demo
+
+```javascript
+// Step 1: Configure session
+mcp_xcodebuildmcp_session_set_defaults({
+    scheme: "Project2026",
+    simulatorId: "49FC08B5-B194-49B8-8898-ABFECBC2E48F",
+    workspacePath: "/Users/pierce/Documents/GitHub/pierceapp/Project2026.xcworkspace"
+})
+
+// Step 2: Build and launch app
+mcp_xcodebuildmcp_build_run_sim()
+
+// Step 3: Verify app state with screenshot
+mcp_xcodebuildmcp_screenshot()
+
+// Step 4: Start video recording
+mcp_xcodebuildmcp_record_sim_video({ start: true })
+
+// Step 5: Navigate to Fitness tab
+mcp_xcodebuildmcp_tap({ label: "Fitness", postDelay: 0.8 })
+
+// Step 6: Open Log Workout sheet
+mcp_xcodebuildmcp_tap({ label: "Log Workout", postDelay: 0.5 })
+
+// Step 7: Close sheet and open mobility routine
+mcp_xcodebuildmcp_tap({ x: 196, y: 70, postDelay: 0.5 })  // Cancel button
+mcp_xcodebuildmcp_tap({ label: "Start Mobility", postDelay: 0.8 })
+
+// Step 8: Navigate through exercises
+mcp_xcodebuildmcp_tap({ label: "Forward", postDelay: 0.8 })
+mcp_xcodebuildmcp_tap({ label: "Forward", postDelay: 0.8 })
+
+// Step 9: Stop and save
+mcp_xcodebuildmcp_record_sim_video({
+    stop: true,
+    outputFile: "/Users/pierce/Documents/GitHub/pierceapp/Docs/Videos/fitness-tab-demo.mp4"
+})
+```
+
+### Troubleshooting Video Recording
+
+| Issue | Solution |
+|-------|----------|
+| Recording doesn't start | Ensure simulator is booted and session defaults are set |
+| Video file not saved | Use absolute path with `.mp4` extension |
+| UI tap not working | Call `describe_ui()` to get correct coordinates/labels |
+| Element not found by label | Check accessibility labels in SwiftUI code, use coordinates as fallback |
+| Choppy video | Reduce `fps` to 24, add `postDelay` to interactions |
 
 ## Log Capture
 

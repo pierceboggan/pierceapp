@@ -472,21 +472,64 @@ struct ReadingProgressCard: View {
             }
             .frame(height: 90)
             
-            Button(action: onLogReading) {
-                Label("Log Reading", systemImage: "plus.circle.fill")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color.orange.opacity(0.1))
-                    .foregroundColor(.orange)
-                    .cornerRadius(8)
+            HStack(spacing: 12) {
+                Button(action: onLogReading) {
+                    Label("Log Reading", systemImage: "plus.circle.fill")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.orange.opacity(0.1))
+                        .foregroundColor(.orange)
+                        .cornerRadius(8)
+                }
+                
+                OpenAudibleButton()
             }
         }
         .padding()
         .background(theme.card)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+    }
+}
+
+// MARK: - Open Audible Button
+
+/// Button that opens the Audible app or falls back to App Store.
+struct OpenAudibleButton: View {
+    @Environment(\.openURL) private var openURL
+    
+    private let audibleScheme = "audible://"
+    private let audibleAppStore = URL(string: "https://apps.apple.com/app/audible/id379693831")!
+    
+    var body: some View {
+        Button {
+            openAudible()
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "headphones")
+                Text("Audible")
+            }
+            .font(.subheadline)
+            .fontWeight(.medium)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Color.purple.opacity(0.1))
+            .foregroundColor(.purple)
+            .cornerRadius(8)
+        }
+        .buttonStyle(.plain)
+    }
+    
+    private func openAudible() {
+        if let url = URL(string: audibleScheme),
+           UIApplication.shared.canOpenURL(url) {
+            openURL(url)
+        } else {
+            // Audible not installed, open App Store
+            openURL(audibleAppStore)
+        }
     }
 }
 
