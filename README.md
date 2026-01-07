@@ -247,10 +247,24 @@ The project uses the modern **Swift Testing framework** with @Test macros:
 # Or using xcodebuild directly:
 xcodebuild test -workspace Project2026.xcworkspace \
     -scheme Project2026 \
-    -destination 'platform=iOS Simulator,name=iPhone 16'
+    -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
 ```
 
 Tests use `@Test`, `#expect`, and `#require` (not XCTest's test prefix or XCTAssert).
+
+**Example test structure:**
+```swift
+import Testing
+
+@Test("User can log a workout")
+func workoutLogging() async throws {
+    let service = FitnessService()
+    let workout = try await service.logWorkout(type: "Cycling", duration: 3600)
+    
+    #expect(workout.type == "Cycling")
+    #require(workout.duration == 3600)
+}
+```
 
 ---
 
