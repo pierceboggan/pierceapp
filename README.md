@@ -18,14 +18,11 @@
 
 Project 2026 is a comprehensive iOS app designed to transform long-term goals into a daily executable system. It reduces decision fatigue by providing structured routines for habits, cleaning tasks, fitness tracking, and personal reflection—all in one beautiful, dark-mode interface.
 
-### 🎬 Demo Videos
+### 🎬 Demo Video
 
 | Feature | Video |
 |---------|-------|
-| 📱 Full App Tour | [Watch Demo](Docs/Videos/project2026-app-demo.mp4) |
-| 💪 Fitness Tab | [Watch Demo](Docs/Videos/fitness-tab-demo.mp4) |
-| 🧘 Mobility Routine | [Watch Demo](Docs/Videos/mobility-routine-demo.mp4) |
-| 📺 tvOS Support | [Watch Demo](Docs/Videos/tvos-mobility-demo.mp4) |
+| 📱 Full App Demo | [Watch Demo](project2026_demo.mp4) |
 
 ---
 
@@ -108,17 +105,28 @@ Never wonder what to clean again:
 
 Built with modern iOS development practices:
 
-- **Swift 6.1+** with strict concurrency
-- **SwiftUI** with Model-View (MV) pattern
+- **Swift 6.1+** with strict concurrency mode
+- **SwiftUI** with Model-View (MV) pattern (no ViewModels/MVVM)
 - **Swift Package Manager** for modular code organization
-- **@Observable** and native SwiftUI state management
-- **Swift Testing** framework for comprehensive tests
-- **Async/await** throughout, no completion handlers
+- **@Observable** and native SwiftUI state management (@State, @Environment, @Binding)
+- **Swift Testing** framework with @Test macros and #expect assertions
+- **Async/await** throughout with @MainActor isolation, no completion handlers or GCD
+
+### 📝 Development Guidelines
+
+All development follows modern Swift best practices documented in `.github/instructions/`:
+- `swift-ios-project.instructions.md` - Project architecture and patterns
+- `swiftui-patterns.instructions.md` - SwiftUI development patterns
+- `swift-concurrency.instructions.md` - Swift 6 strict concurrency guidelines
+- `swift-testing.instructions.md` - Modern Swift Testing framework patterns
+- `xcodebuildmcp-tools.instructions.md` - Build, test, and deployment automation
+
+**Key principle:** All new code and features are written in `Project2026Package`, not in the app shell.
 
 ### Multi-Platform Support
-- 📱 **iOS** - Primary experience
-- 🖥️ **macOS** - Native Mac app
-- 📺 **tvOS** - Living room mobility routines
+- 📱 **iOS 18.0+** - Primary experience
+- 🖥️ **macOS 15.0+** - Native Mac app
+- 📺 **tvOS 18.0+** - Living room mobility routines
 
 ### 📺 tvOS App
 
@@ -207,30 +215,42 @@ open Project2026.xcworkspace
 
 ```
 pierceapp/
-├── Project2026/              # iOS app shell
-│   ├── Views/                # SwiftUI views
-│   ├── Models/               # Data models
-│   └── Services/             # Business logic
+├── Project2026/              # iOS app shell (entry point only)
 ├── Project2026Mac/           # macOS app
 ├── Project2026TV/            # tvOS app
-├── Project2026Package/       # Shared Swift Package
-├── Project2026Tests/         # Unit tests
+├── Project2026Package/       # Swift Package with all features
+│   ├── Package.swift
+│   ├── Sources/
+│   │   └── Project2026Feature/
+│   │       ├── Views/        # SwiftUI views
+│   │       ├── Models/       # Data models
+│   │       └── Services/     # Business logic
+│   └── Tests/
+│       └── Project2026FeatureTests/  # Swift Testing tests
+├── Project2026Tests/         # Additional unit tests
+├── Project2026UITests/       # UI automation tests
+├── Config/                   # XCConfig build settings
 └── Docs/
-    ├── Screenshots/          # App screenshots
-    └── Videos/               # Demo videos
+    └── Screenshots/          # App screenshots
 ```
 
 ---
 
 ## 🧪 Testing
 
-Run tests using Swift Testing framework:
+The project uses the modern **Swift Testing framework** with @Test macros:
 
 ```bash
-# From VS Code with XcodeBuildMCP
-# Or using xcodebuild:
-xcodebuild test -workspace Project2026.xcworkspace -scheme Project2026 -destination 'platform=iOS Simulator,name=iPhone 16'
+# Using XcodeBuildMCP (preferred)
+# See .github/instructions/xcodebuildmcp-tools.instructions.md
+
+# Or using xcodebuild directly:
+xcodebuild test -workspace Project2026.xcworkspace \
+    -scheme Project2026 \
+    -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
+
+Tests use `@Test`, `#expect`, and `#require` (not XCTest's test prefix or XCTAssert).
 
 ---
 
