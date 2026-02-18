@@ -240,7 +240,13 @@ This project is for personal use.
 
 ---
 
-## 🙏 Acknowledgments
+## � Author
+
+Made by **Pierce Boggan**.
+
+---
+
+## �🙏 Acknowledgments
 
 - Built entirely with **GitHub Copilot Agent Mode** in **VS Code**
 - Inspired by the desire to make 2026 an exceptional year
